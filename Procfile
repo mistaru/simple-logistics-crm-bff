@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/simple-logistics-crm-bff-0.0.1-SNAPSHOT.jar
