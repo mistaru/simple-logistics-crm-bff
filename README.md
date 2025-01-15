@@ -18,6 +18,13 @@ This is a Spring Boot application that serves as the backend for a frontend appl
 - **PostgreSQL**: Used as the relational database management system
 - **Maven**: For dependency management and build automation
 
+## Swagger
+PROD:
+http://localhost:8080/swagger-ui/index.html
+
+STAGE:
+http://localhost:8080/swagger-ui/index.html
+
 ## Setup and Installation
 To set up and run the application locally, follow these steps:
 

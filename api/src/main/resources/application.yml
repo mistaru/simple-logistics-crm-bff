@@ -39,5 +39,7 @@ app:
     enable-result-logging: false
     wrapper-class-name: kg.founders.common.models.wrapper.WrapperResponseMessage
 
-
+springdoc:
+  api-docs:
+    enabled: ${SWAGGER_ENABLED:true}
 
