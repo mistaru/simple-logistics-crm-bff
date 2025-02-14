@@ -18,12 +18,6 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>kg.founders</groupId>
-            <artifactId>bff</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>cn.easyproject</groupId>
             <artifactId>orai18n</artifactId>
             <version>12.1.0.2.0</version>
@@ -32,12 +26,6 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>23.0.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>kg.devcats</groupId>
-            <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

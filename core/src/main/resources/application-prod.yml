@@ -4,4 +4,4 @@ spring:
     url: ${CREDIT_DB_URL}
     username: ${CREDIT_DB_USERNAME}
     password: ${CREDIT_DB_PASSWORD}
-    driver-class-name: oracle.jdbc.OracleDriver
+    driver-class-name: org.postgresql.Driver
