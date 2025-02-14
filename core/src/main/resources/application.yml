@@ -1,0 +1,35 @@
+spring:
+  profiles.active: ${ACTIVE_PROFILE:test}
+  web:
+    encoding:
+      charset: UTF-8
+  cache.type: redis
+  jpa:
+    open-in-view: false
+    database: default
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 150MB
+      max-request-size: 150MB
+  datasource:
+    hikari:
+      connection-timeout: ${JDBC_CONNECTION_TIMEOUT:120000}
+      idle-timeout: ${JDBC_IDLE_TIMEOUT:300000}
+      max-lifetime: ${JDBC_MAX_LIFETIME:600000}
+      maximum-pool-size: ${JDBC_MAXIMUM_POOL_SIZE:30}
+      pool-name: MKK-Monitor-Hikari-pool
+      data-source-properties:
+        cache-prep-stmts: ${JDBC_CACHE_PREP_STMTS:true}
+        prep-stmt-cache-size: ${JDBC_PREP_STMT_CACHE_SIZE:250}
+        prep-stmt-cache-sql-limit: ${JDBC_PREP_STMT_CACHE_SQL_LIMIT:2048}
+  liquibase:
+    enabled: false
+    contexts: liqui-dev
+  file:
+    path: ${FILES_PATH_NAME:files}
+    algorithm: SHA3-256
+
+server:
+  port: 8081

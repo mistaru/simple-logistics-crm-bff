@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+<!--    <changeSet author="tkasenov" id="admin" context="liqui-dev, liqui-test">-->
+<!--        <sqlFile relativeToChangelogFile="true" encoding="utf8" path="scripts/001_ADMIN.sql"/>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet author="nnurbekova" id="bank-52_add_bank_freezing_locale_messages" context="liqui-dev, liqui-test">-->
+<!--        <sqlFile relativeToChangelogFile="true" encoding="utf8" path="scripts/002_ADD_BANK_FREEZING_LOCALE_MESSAGES.sql"/>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet author="akakitaeva" id="creditcond-182_add_bank_adapter_approved_on_different_terms" context="liqui-dev, liqui-test">-->
+<!--        <sqlFile relativeToChangelogFile="true" encoding="utf8" path="scripts/003_ADD_BANK_APPROVED_ON_DIFFERENT_TERMS.sql"/>-->
+<!--    </changeSet>-->
+</databaseChangeLog>

@@ -1,0 +1,7 @@
+spring:
+  profiles: test
+  datasource:
+    url: ${CREDIT_DB_URL:jdbc:oracle:thin:@//172.27.128.69:1521/MKK}
+    username: ${CREDIT_DB_USERNAME:TEST}
+    password: ${CREDIT_DB_PASSWORD:Password12$}
+    driver-class-name: oracle.jdbc.OracleDriver
