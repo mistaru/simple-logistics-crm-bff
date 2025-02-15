@@ -109,7 +109,7 @@ public class LogisticAuth extends BaseEntity implements UserDetails, IdBased {
     }
 
     public void setRoles(Set<LogisticAuthRole> logisticAuthRoles) {
-        this.logisticAuthRoles = this.logisticAuthRoles;
+        this.logisticAuthRoles = logisticAuthRoles;
 
         this.authorities = logisticAuthRoles == null ? Collections.emptySet() : logisticAuthRoles.stream()
                 .filter(LogisticAuthRole::getActive)
