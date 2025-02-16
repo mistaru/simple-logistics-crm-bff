@@ -30,7 +30,7 @@
         <java.version>14</java.version>
         <guava.version>27.1-jre</guava.version>
         <scrypt.version>1.4.0</scrypt.version>
-        <liquibase.version>3.6.3</liquibase.version>
+        <liquibase.version>4.8.0</liquibase.version>
     </properties>
     <dependencies>
         <dependency>

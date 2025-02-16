@@ -7,8 +7,11 @@ spring:
   jpa:
     open-in-view: false
     database: default
-    hibernate:
-      ddl-auto: update
+    properties:
+      hibernate:
+        ddl-auto: update
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: logistic
   servlet:
     multipart:
       max-file-size: 150MB
@@ -26,7 +29,9 @@ spring:
         prep-stmt-cache-sql-limit: ${JDBC_PREP_STMT_CACHE_SQL_LIMIT:2048}
   liquibase:
     enabled: false
-    contexts: liqui-dev
+    contexts: liqui-test, liqui-dev
+    default-schema: logistic
+    change-log: classpath:db/changelog/db.master.xml
   file:
     path: ${FILES_PATH_NAME:files}
     algorithm: SHA3-256

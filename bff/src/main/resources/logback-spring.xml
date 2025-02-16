@@ -2,7 +2,7 @@
 <configuration>
 
     <!-- Setting up log path and log file name -->
-    <property name="LOG_PATH" value="/files/logs/bff" />
+    <property name="LOG_PATH" value="./files/logs/bff" />
     <property name="LOG_FILE_NAME" value="bff" />
     <property name="LOG_FILE_MAX_HISTORY" value="20" />
 

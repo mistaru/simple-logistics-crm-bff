@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Table(name = LogisticLoginHistory.TABLE_NAME, indexes = {@Index(columnList = "login")})
+@Table(name = LogisticLoginHistory.TABLE_NAME , indexes = {@Index(columnList = "login")})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LogisticLoginHistory implements IdBased, Serializable {
 
