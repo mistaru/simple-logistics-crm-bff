@@ -1,7 +1,6 @@
 package kg.founders.core.entity;
 
 import kg.founders.core.entity.dictionaries.CityDict;
-import kg.founders.core.entity.dictionaries.CountryDict;
 import kg.founders.core.enums.WarehouseType;
 import kg.founders.core.util.SqlTable;
 import lombok.AccessLevel;
