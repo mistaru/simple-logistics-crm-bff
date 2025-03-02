@@ -53,14 +53,15 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint())
-                .and()
+                //.exceptionHandling()
+                //.authenticationEntryPoint(authenticationEntryPoint())
+               // .and()
                 .authorizeRequests()
-                .antMatchers("/actuator/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/**").permitAll()
+                //.antMatchers("/actuator/**").permitAll()
+                //.anyRequest().authenticated()
                 .and()
-                .addFilterAt(new TokenAuthFilter(manager, gson), UsernamePasswordAuthenticationFilter.class)
+                //.addFilterAt(new TokenAuthFilter(manager, gson), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         ;
     }
