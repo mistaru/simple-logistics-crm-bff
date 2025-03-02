@@ -10,7 +10,6 @@ spring:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect
-      default_schema: logistic
       format_sql: true
     show-sql: true
     properties:
@@ -34,7 +33,6 @@ spring:
   liquibase:
     enabled: false
     contexts: liqui-test, liqui-dev
-    default-schema: logistic
     change-log: classpath:db/changelog/db.master.xml
   file:
     path: ${FILES_PATH_NAME:files}
