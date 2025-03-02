@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = Cargo.TABLE_NAME)
+@Table(name = CargoTruck.TABLE_NAME)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 public class CargoTruck extends BaseEntity {
