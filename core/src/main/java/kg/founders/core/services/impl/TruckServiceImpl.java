@@ -26,7 +26,9 @@ public class TruckServiceImpl implements TruckService {
 
     @Override
     public List<TruckModel> getAll() {
-        return truckRepository.findAll().stream().map(truckConverter::convertTruckToTruckModel).collect(Collectors.toList());
+        return truckRepository.findAll().stream()
+                .filter(truck -> truck.getRdt() == null)
+                .map(truckConverter::convertTruckToTruckModel).collect(Collectors.toList());
     }
 
     @Override

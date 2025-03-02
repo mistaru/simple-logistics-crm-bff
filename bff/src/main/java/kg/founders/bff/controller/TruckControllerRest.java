@@ -22,6 +22,7 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PACKAGE)
 @HasPermission(value = PermissionType.PERMISSION)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@CrossOrigin(origins = "http://localhost:8080")
 public class TruckControllerRest {
     TruckService truckService;
 
