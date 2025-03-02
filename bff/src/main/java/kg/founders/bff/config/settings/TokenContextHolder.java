@@ -52,7 +52,10 @@ public class TokenContextHolder extends AbstractAuthenticationToken {
 
     public static Optional<TokenContextHolder> currentOptional() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
-        return Optional.ofNullable(auth == null ? null : ((TokenContextHolder) auth));
+        if (auth instanceof TokenContextHolder) {
+            return Optional.of((TokenContextHolder) auth);
+        }
+        return Optional.empty();
     }
 
     public static TokenContextHolder current() {

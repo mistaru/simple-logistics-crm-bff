@@ -11,8 +11,13 @@ import java.util.Optional;
 public class AuditorConfig implements AuditorAware<AuditModel> {
     @Override
     public @NotNull Optional<AuditModel> getCurrentAuditor() {
-        return TokenContextHolder.currentOptional().map(authenticated ->
-                new AuditModel(authenticated.getPrincipal().getId(), "AUTH")
+        return TokenContextHolder.currentOptional().map(authenticated -> {
+                    var auth = authenticated.getPrincipal();
+                    if (auth != null) {
+                        return new AuditModel(auth.getId(), "AUTH");
+                    }
+                    return null;
+                }
         );
     }
 }
