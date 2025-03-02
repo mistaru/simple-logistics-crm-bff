@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public interface CargoTruckRepo extends JpaRepository<CargoTruck, Integer> {
-    List<CargoTruck> findByCargoId(Long cargoId);
+    List<CargoTruck> findByCargoIdAndRdtIsNull(Long cargoId);
 
-    List<CargoTruck> findByTruckId(Long truckId);
+    List<CargoTruck> findByTruckIdAndRdtIsNull(Long truckId);
 
 }

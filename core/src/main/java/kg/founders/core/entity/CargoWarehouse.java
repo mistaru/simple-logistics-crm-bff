@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = Cargo.TABLE_NAME)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
-public class CargoWarehouse {
+public class CargoWarehouse extends BaseEntity{
 
     @SqlTable
     public static final String TABLE_NAME = "CARGO_WAREHOUSE";

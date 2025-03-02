@@ -28,7 +28,7 @@ public class CargoTruckServiceImpl implements CargoTruckService {
 
     // Получить список грузов по ID грузовика
     public List<Cargo> getCargosByTruckId(Long truckId) {
-        List<Long> cargoIds = cargoTruckRepo.findByTruckId(truckId)
+        List<Long> cargoIds = cargoTruckRepo.findByTruckIdAndRdtIsNull(truckId)
                 .stream()
                 .map(CargoTruck::getCargoId)
                 .collect(Collectors.toList());
@@ -38,7 +38,7 @@ public class CargoTruckServiceImpl implements CargoTruckService {
 
     // Получить список грузовиков по ID груза
     public List<Truck> getTrucksByCargoId(Long cargoId) {
-        List<Long> truckIds = cargoTruckRepo.findByCargoId(cargoId)
+        List<Long> truckIds = cargoTruckRepo.findByCargoIdAndRdtIsNull(cargoId)
                 .stream()
                 .map(CargoTruck::getTruckId)
                 .collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class CargoTruckServiceImpl implements CargoTruckService {
     }
 
     public void unassignCargoFromTruck(Long cargoId, Long truckId) {
-        List<CargoTruck> cargoTrucks = cargoTruckRepo.findByCargoId(cargoId)
+        List<CargoTruck> cargoTrucks = cargoTruckRepo.findByCargoIdAndRdtIsNull(cargoId)
                 .stream()
                 .filter(ct -> ct.getTruckId().equals(truckId))
                 .collect(Collectors.toList());
