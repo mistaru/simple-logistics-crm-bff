@@ -7,11 +7,15 @@ spring:
   jpa:
     open-in-view: false
     database: default
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      default_schema: logistic
+      format_sql: true
+    show-sql: true
     properties:
       hibernate:
-        ddl-auto: update
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: logistic
+        format_sql: true
   servlet:
     multipart:
       max-file-size: 150MB
