@@ -23,7 +23,7 @@ public class WarehouseConverter extends ModelConverter<WarehouseModel, Warehouse
         WarehouseModel model = new WarehouseModel();
         model.setId(entity.getId());
         model.setName(entity.getName());
-        model.setWarehouseType(entity.getWarehouseType());
+        model.setLocal(entity.isLocal());
         model.setCity(cityDictConverter.convertFromEntity(entity.getCity()));
         model.setAddress(entity.getAddress());
         model.setPhoneNumber(entity.getPhoneNumber());
@@ -35,7 +35,7 @@ public class WarehouseConverter extends ModelConverter<WarehouseModel, Warehouse
         Warehouse entity = new Warehouse();
         entity.setId(model.getId());
         entity.setName(model.getName());
-        entity.setWarehouseType(model.getWarehouseType());
+        entity.setLocal(model.isLocal());
         entity.setCity(cityDictConverter.convertFromModel(model.getCity()));
         entity.setAddress(model.getAddress());
         entity.setPhoneNumber(model.getPhoneNumber());

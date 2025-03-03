@@ -1,7 +1,6 @@
 package kg.founders.core.entity;
 
 import kg.founders.core.entity.dictionaries.CityDict;
-import kg.founders.core.enums.WarehouseType;
 import kg.founders.core.util.SqlTable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,9 +30,8 @@ public class Warehouse extends BaseEntity {
     @Column(nullable = false)
     String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    WarehouseType warehouseType;
+    @Column(name = "IS_LOCAL", nullable = false)
+    boolean isLocal;
 
     @ManyToOne
     @JoinColumn(name = "CITY_ID", nullable = false)
