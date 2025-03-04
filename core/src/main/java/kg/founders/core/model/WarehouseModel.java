@@ -1,6 +1,6 @@
 package kg.founders.core.model;
 
-import kg.founders.core.enums.WarehouseType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import kg.founders.core.model.dictionaries.CityDictModel;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,9 +15,10 @@ import java.math.BigDecimal;
 public class WarehouseModel {
     Long id;
     String name;
-    WarehouseType warehouseType;
     CityDictModel city;
     String address;
     String phoneNumber;
     BigDecimal volumeM3;
+    @JsonProperty("isLocal")
+    boolean isLocal;
 }
