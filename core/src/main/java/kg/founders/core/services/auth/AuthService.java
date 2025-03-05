@@ -1,14 +1,12 @@
 package kg.founders.core.services.auth;
 
 import kg.founders.core.entity.auth.LogisticAuth;
-import kg.founders.core.entity.auth.role.LogisticRole;
 import kg.founders.core.model.audit.AuditModel;
 import kg.founders.core.model.auth.LogisticAuthModel;
 import kg.founders.core.model.login.PasswordChangeModel;
 
-import java.sql.Connection;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface AuthService {
 
@@ -16,13 +14,15 @@ public interface AuthService {
 
     Optional<LogisticAuth> findById(Long authId);
 
+    boolean blockAuth(Long authId, boolean block);
+
     boolean blockAuth(String username, boolean block);
 
-    void updatePassword(LogisticAuth logisticAuth, PasswordChangeModel model, AuditModel auditModel);
+    void updatePassword(LogisticAuth bankAuth, PasswordChangeModel model, AuditModel auditModel);
 
-    LogisticAuth register(Connection connection, LogisticAuth logisticAuth, Set<LogisticRole> logisticRoles);
+    LogisticAuth save(LogisticAuthModel bankAuth);
 
-    LogisticAuth save(LogisticAuth logisticAuth);
+    LogisticAuth save(LogisticAuth bankAuth);
 
     Boolean isBlocked(Long id);
 
@@ -31,4 +31,8 @@ public interface AuthService {
     LogisticAuthModel toModel(LogisticAuth logisticAuth);
 
     void updateActiveRole(Long id, Long roleId);
+
+    List<LogisticAuthModel> findAll();
+
+    void deleteByAuthId(Long authId);
 }

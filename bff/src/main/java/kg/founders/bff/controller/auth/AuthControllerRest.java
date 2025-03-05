@@ -6,6 +6,8 @@ import kg.founders.bff.config.response.ResponseMessage;
 import kg.founders.bff.config.response.ResultCode;
 import kg.founders.bff.config.settings.TokenContextHolder;
 import kg.founders.core.entity.auth.LogisticAuth;
+import kg.founders.core.enums.permission.AccessType;
+import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.exceptions.ForbiddenException;
 import kg.founders.core.exceptions.UserNotFoundException;
 import kg.founders.core.model.audit.AuditModel;
@@ -14,27 +16,27 @@ import kg.founders.core.model.login.LoginModel;
 import kg.founders.core.model.login.PasswordChangeModel;
 import kg.founders.core.services.auth.AuthService;
 import kg.founders.core.services.login.LoginService;
+import kg.founders.core.settings.security.permission.annotation.HasAccess;
+import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api")
 public class AuthControllerRest {
     AuthService authService;
     LoginService loginService;
     AuditorAware<AuditModel> auditorAware;
-
-    public AuthControllerRest(AuthService authService, LoginService loginService) {
-        this.authService = authService;
-        this.loginService = loginService;
-    }
 
     @PostMapping(value = "/public/auth/login")
     @ApiOperation("Возвращает токен")
@@ -103,4 +105,55 @@ public class AuthControllerRest {
         }
     }
 
+    @PostMapping(value = "/auth")
+    @HasPermission(PermissionType.AUTH)
+    @HasAccess({AccessType.CREATE, AccessType.UPDATE})
+    public ResponseMessage<String> create(@RequestBody LogisticAuthModel model) {
+        try {
+            authService.save(model);
+            return new ResponseMessage<>("Пользователь успешно сохранен", ResultCode.OK);
+        } catch (Exception e) {
+            log.error("AuthControllerRest : create {}", e.getMessage());
+            return new ResponseMessage<>("Ошибка при сохранении пользователя - " + e.getMessage(), ResultCode.FAIL);
+        }
+    }
+
+    @DeleteMapping(value = "/auth")
+    @HasPermission(PermissionType.AUTH)
+    @HasAccess({AccessType.DELETE})
+    public ResponseMessage<String> delete(@RequestParam Long authId) {
+        try {
+            authService.deleteByAuthId(authId);
+            return new ResponseMessage<>("Пользователь успешно удален", ResultCode.OK);
+        } catch (Exception e) {
+            log.error("AuthControllerRest : delete {}", e.getMessage());
+            return new ResponseMessage<>("Ошибка при удалении пользователя - " + e.getMessage(), ResultCode.FAIL);
+        }
+    }
+
+    @PostMapping(value = "/auth/block")
+    @HasPermission(PermissionType.AUTH)
+    @HasAccess({AccessType.UPDATE})
+    public ResponseMessage<String> block(@RequestParam Long authId, @RequestParam boolean block) {
+        try {
+            authService.blockAuth(authId, block);
+            return new ResponseMessage<>("Пользователь успешно заблокирован", ResultCode.OK);
+        } catch (Exception e) {
+            log.error("AuthControllerRest : block {}", e.getMessage());
+            return new ResponseMessage<>("Ошибка при блокировке пользователя - " + e.getMessage(), ResultCode.FAIL);
+        }
+    }
+
+    @GetMapping(value = "/auth")
+    @ManualPermissionControl
+    @HasPermission(PermissionType.AUTH)
+    @HasAccess({AccessType.READ})
+    public ResponseMessage<List<LogisticAuthModel>> findAll() {
+        try {
+            return new ResponseMessage<>(authService.findAll(), ResultCode.OK);
+        } catch (Exception e) {
+            log.error("AuthControllerRest : findAll {}", e.getMessage());
+            return new ResponseMessage<>(null, ResultCode.FAIL, "Ошибка при выгрузке пользователей - " + e.getMessage());
+        }
+    }
 }

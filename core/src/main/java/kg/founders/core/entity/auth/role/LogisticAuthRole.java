@@ -3,10 +3,7 @@ package kg.founders.core.entity.auth.role;
 import kg.founders.core.entity.auth.LogisticAuth;
 import kg.founders.core.util.SqlTable;
 import kg.founders.core.util.GsonIgnore;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
@@ -16,6 +13,7 @@ import java.io.Serializable;
 @Entity
 @EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = LogisticAuthRole.TABLE_NAME)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LogisticAuthRole implements Serializable {
