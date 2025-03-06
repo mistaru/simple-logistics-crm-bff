@@ -16,9 +16,9 @@ import java.util.stream.Stream;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum PermissionType implements GrantedAuthority {
     TEST("", ScreenType.GENERAL, "", ""),
+    AUTH("Пользователи", ScreenType.ADMINISTRATION, "auth", "folder_shared"),
     PERMISSION("Просмотр доступов", ScreenType.ADMINISTRATION, "permission", "people_alt"),
-    ROLE("Редактирование ролей", ScreenType.ADMINISTRATION, "roles", "person_add"),
-    ;
+    ROLE("Редактирование ролей", ScreenType.ADMINISTRATION, "roles", "person_add");
 
     String description;
     ScreenType screenType;
