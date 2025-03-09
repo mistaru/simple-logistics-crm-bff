@@ -2,9 +2,13 @@ package kg.founders.core.converter;
 
 import kg.founders.core.entity.Payment;
 import kg.founders.core.model.PaymentModel;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+@Component
+@RequiredArgsConstructor
 public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
 
     @PostConstruct

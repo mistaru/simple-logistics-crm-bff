@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = Payment.TABLE_NAME)
-public class Payment {
+public class Payment extends BaseEntity {
     @SqlTable
     public static final String TABLE_NAME = "PAYMENT";
     public static final String SEQ_NAME = TABLE_NAME + "_SEQ";
