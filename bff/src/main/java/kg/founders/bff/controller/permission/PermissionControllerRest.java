@@ -1,11 +1,8 @@
 package kg.founders.bff.controller.permission;
 
-import kg.founders.core.enums.permission.AccessType;
-import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.model.auth.role.permission.LogisticPermissionModel;
 import kg.founders.core.services.auth.role.permission.PermissionService;
-import kg.founders.core.settings.security.permission.annotation.HasAccess;
-import kg.founders.core.settings.security.permission.annotation.HasPermission;
+import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +19,13 @@ import static lombok.AccessLevel.PRIVATE;
 @RestController
 @RequestMapping("/api/permission")
 @AllArgsConstructor(access = PACKAGE)
-@HasPermission(value = PermissionType.PERMISSION)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class PermissionControllerRest {
 
     PermissionService permissionsService;
 
     @GetMapping
-    @HasAccess(AccessType.READ)
+    @ManualPermissionControl
     public List<LogisticPermissionModel> list() {
         return permissionsService.listAllAsModel();
     }
