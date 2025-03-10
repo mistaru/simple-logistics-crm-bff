@@ -20,12 +20,16 @@ public class CountryDictConverter extends ModelConverter<CountryDictModel, Count
     private CountryDictModel convertToModel(CountryDict entity) {
         CountryDictModel model = new CountryDictModel();
         model.setId(entity.getId());
+        model.setName(entity.getName());
+        model.setDescription(entity.getDescription());
         return model;
     }
 
     private CountryDict convertToEntity(CountryDictModel model) {
         CountryDict entity = new CountryDict();
         entity.setId(model.getId());
+        entity.setName(model.getName());
+        entity.setDescription(model.getDescription());
         return entity;
     }
 }

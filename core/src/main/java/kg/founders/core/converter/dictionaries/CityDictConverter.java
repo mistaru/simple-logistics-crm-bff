@@ -25,7 +25,9 @@ public class CityDictConverter extends ModelConverter<CityDictModel, CityDict> {
         CityDictModel model = new CityDictModel();
         model.setId(entity.getId());
         model.setName(entity.getName());
-        model.setCountry(countryDictConverter.convertFromEntity(entity.getCountry()));
+        model.setDescription(entity.getDescription());
+        if (entity.getCountry() != null)
+            model.setCountry(countryDictConverter.convertFromEntity(entity.getCountry()));
         return model;
     }
 
@@ -33,7 +35,9 @@ public class CityDictConverter extends ModelConverter<CityDictModel, CityDict> {
         CityDict entity = new CityDict();
         entity.setId(model.getId());
         entity.setName(model.getName());
-        entity.setCountry(countryDictConverter.convertFromModel(model.getCountry()));
+        entity.setDescription(model.getDescription());
+        if (model.getCountry() != null)
+            entity.setCountry(countryDictConverter.convertFromModel(model.getCountry()));
         return entity;
     }
 }
