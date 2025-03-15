@@ -20,7 +20,7 @@ import static lombok.AccessLevel.PRIVATE;
 public class LoginHistoryServiceImpl implements LoginHistoryService {
 
     LoginHistoryDao dao;
-    static Integer MAX_LOGIN_ATTEMPTS = 3;
+    static Integer MAX_LOGIN_ATTEMPTS = 5;
 
     public boolean isLoginAttemptsExceeded(String login) {
         return dao.isLoginAttemptsExceeded(login, MAX_LOGIN_ATTEMPTS);
