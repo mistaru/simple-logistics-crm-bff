@@ -10,8 +10,8 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public enum ScreenType {
-    GENERAL("Универсальный модуль", ""),
-    ADMINISTRATION("Универсальный модуль", ""),
+    GENERAL(null, ""),
+    ADMINISTRATION("Администрирование", "mdi-badge-account-horizontal"),
     ;
 
     String description;

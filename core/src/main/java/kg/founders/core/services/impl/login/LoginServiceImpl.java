@@ -40,7 +40,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String login(LoginModel loginModel, String ip) {
-        log.debug("login(): with username '{}', ip: '{}'", loginModel.getUsername(), ip);
+        log.info("login(): with username '{}', ip: '{}'", loginModel.getUsername(), ip);
         try {
             LogisticAuth logisticAuth = verify(loginModel.getUsername(), loginModel.getPassword());
             return generateJwtCode(logisticAuth);
@@ -109,6 +109,7 @@ public class LoginServiceImpl implements LoginService {
         var auth = authService.findByUsername(username).orElseThrow(UserNotFoundException::new);
         if (auth.getBlocked() != null || auth.getRdt() != null) throw new UserNotFoundException();
 
+        auth.setLogisticAuthRoles(auth.getLogisticAuthRoles());
         return auth;
     }
 
