@@ -22,10 +22,17 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         TruckModel truckModel = new TruckModel();
         truckModel.setId(truck.getId());
         truckModel.setRegistrationCountry(truck.getRegistrationCountry());
-        truckModel.setVolumeM3(truck.getVolumeM3());
+        truckModel.setVolumeTotalM3(truck.getVolumeTotalM3());
+        truckModel.setVolumeOccupiedM3(truck.getVolumeOccupiedM3());
+        truckModel.setVolumeAvailableM3(truck.getVolumeAvailableM3());
         truckModel.setDepartureWarehouse(truck.getDepartureWarehouse());
-        truckModel.setDeliveryWarehouse(truck.getDeliveryWarehouse());
+        truckModel.setArrivalWarehouse(truck.getArrivalWarehouse());
+        truckModel.setDriverFullname(truck.getDriverFullname());
         truckModel.setDriverPhone(truck.getDriverPhone());
+        truckModel.setDepartureDatePlanned(truck.getDepartureDatePlanned());
+        truckModel.setDepartureDateActual(truck.getDepartureDateActual());
+        truckModel.setArrivalDatePlanned(truck.getArrivalDatePlanned());
+        truckModel.setArrivalDateActual(truck.getArrivalDateActual());
         truckModel.setAdditionalInformation(truck.getAdditionalInformation());
         return truckModel;
     }
@@ -34,10 +41,17 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         Truck truck = new Truck();
         truck.setId(truckModel.getId());
         truck.setRegistrationCountry(truckModel.getRegistrationCountry());
-        truck.setVolumeM3(truckModel.getVolumeM3());
+        truck.setVolumeTotalM3(truckModel.getVolumeTotalM3());
+        truck.setVolumeOccupiedM3(truckModel.getVolumeOccupiedM3());
+        truck.setVolumeAvailableM3(truckModel.getVolumeAvailableM3());
         truck.setDepartureWarehouse(truckModel.getDepartureWarehouse());
-        truck.setDeliveryWarehouse(truckModel.getDeliveryWarehouse());
+        truck.setArrivalWarehouse(truckModel.getArrivalWarehouse());
+        truck.setDriverFullname(truckModel.getDriverFullname());
         truck.setDriverPhone(truckModel.getDriverPhone());
+        truck.setDepartureDatePlanned(truckModel.getDepartureDatePlanned());
+        truck.setDepartureDateActual(truckModel.getDepartureDateActual());
+        truck.setArrivalDatePlanned(truckModel.getArrivalDatePlanned());
+        truck.setArrivalDateActual(truckModel.getArrivalDateActual());
         truck.setAdditionalInformation(truckModel.getAdditionalInformation());
         return truck;
     }
