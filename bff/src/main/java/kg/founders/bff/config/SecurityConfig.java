@@ -26,7 +26,7 @@ import java.util.Collections;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/public/**"),
@@ -53,15 +53,15 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .csrf().disable()
-                //.exceptionHandling()
-                //.authenticationEntryPoint(authenticationEntryPoint())
-               // .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .and()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-                //.antMatchers("/actuator/**").permitAll()
-                //.anyRequest().authenticated()
+                .antMatchers("/actuator/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                //.addFilterAt(new TokenAuthFilter(manager, gson), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new TokenAuthFilter(manager, gson), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         ;
     }

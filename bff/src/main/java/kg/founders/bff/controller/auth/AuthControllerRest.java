@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiParam;
 import kg.founders.bff.config.response.ResponseMessage;
 import kg.founders.bff.config.response.ResultCode;
 import kg.founders.bff.config.settings.TokenContextHolder;
+import kg.founders.bff.config.settings.perms.PermissionValidation;
 import kg.founders.core.entity.auth.LogisticAuth;
 import kg.founders.core.enums.permission.AccessType;
 import kg.founders.core.enums.permission.PermissionType;
@@ -110,6 +111,7 @@ public class AuthControllerRest {
     @HasAccess({AccessType.CREATE, AccessType.UPDATE})
     public ResponseMessage<String> create(@RequestBody LogisticAuthModel model) {
         try {
+            PermissionValidation.validateCreateUpdate(model);
             authService.save(model);
             return new ResponseMessage<>("Пользователь успешно сохранен", ResultCode.OK);
         } catch (Exception e) {

@@ -17,11 +17,11 @@ public class AuthRoleDaoImpl implements AuthRoleDao {
 
     JdbcTemplate jdbcTemplate;
 
+
     @Override
     public void updateActiveRole(Long authId, Long roleId) {
-        jdbcTemplate.update("UPDATE " + LogisticAuthRole.TABLE_NAME + " " +
-                        " SET ACTIVE = (CASE WHEN BANK_ROLE_ID = ? THEN 1 ELSE 0 END) " +
-                        " WHERE BANK_AUTH_ID = ?"
+        jdbcTemplate.update("UPDATE " + LogisticAuthRole.TABLE_NAME + " SET ACTIVE = (LOGISTIC_ROLE_ID = ?) " +
+                        " WHERE LOGISTIC_AUTH_ID = ?"
                 , roleId, authId);
     }
 }

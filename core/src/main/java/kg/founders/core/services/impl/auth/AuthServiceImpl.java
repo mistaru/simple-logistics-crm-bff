@@ -103,14 +103,14 @@ public class AuthServiceImpl implements AuthService {
 
         logisticAuth.setUsername(model.getUsername());
         logisticAuth.setBlocked(model.getBlocked());
-        if (model.getId() == null) {
+        if (model.getId() == null || !Strings.isNullOrEmpty(model.getPassword())) {
             ChainValidator.create().thenPassword(model::getPassword).validate();
             logisticAuth.setPassword(hashPassword(model.getPassword()));
             logisticAuth.addToTheExpireDateDays(PASSWORD_EXPIRATION_DAYS);
         }
         var savedAuth = save(logisticAuth);
 
-        savedAuth.setRoles(Set.copyOf(authRoleService.saveAllByAuthId(savedAuth, roles)));
+        savedAuth.setLogisticAuthRoles(Set.copyOf(authRoleService.saveAllByAuthId(savedAuth, roles)));
 
         return savedAuth;
     }

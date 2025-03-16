@@ -83,7 +83,7 @@ public class LogisticAuth extends BaseEntity implements UserDetails, IdBased {
         this.username = username;
         this.password = password;
         this.lastActivity = lastActivity;
-        setRoles(roles);
+        setLogisticAuthRoles(roles);
     }
 
     public LogisticAuth(
@@ -105,10 +105,10 @@ public class LogisticAuth extends BaseEntity implements UserDetails, IdBased {
         this.password = password;
         this.blocked = blocked;
         this.lastActivity = lastActivity;
-        setRoles(roles);
+        setLogisticAuthRoles(roles);
     }
 
-    public void setRoles(Set<LogisticAuthRole> logisticAuthRoles) {
+    public void setLogisticAuthRoles(Set<LogisticAuthRole> logisticAuthRoles) {
         this.logisticAuthRoles = logisticAuthRoles;
 
         this.authorities = logisticAuthRoles == null ? Collections.emptySet() : logisticAuthRoles.stream()
