@@ -1,5 +1,6 @@
 package kg.founders.core.entity;
 
+import kg.founders.core.model.ClientModel;
 import kg.founders.core.util.SqlTable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -39,4 +40,15 @@ public class Client extends BaseEntity {
 
     @Column(name = "ADDITIONAL_INFO")
     String additionalInfo;
+
+    public ClientModel toModel() {
+        return new ClientModel(
+                id,
+                fullName,
+                phoneNumber,
+                whatsappNumber,
+                email,
+                additionalInfo
+        );
+    }
 }
