@@ -1,9 +1,13 @@
 package kg.founders.core.services.impl;
 
+import kg.founders.core.converter.CargoModelToCargoPaymentModelConverter;
 import kg.founders.core.converter.PaymentConverter;
 import kg.founders.core.entity.Payment;
+import kg.founders.core.model.CargoModel;
+import kg.founders.core.model.CargoPaymentModel;
 import kg.founders.core.model.PaymentModel;
 import kg.founders.core.repo.PaymentRepo;
+import kg.founders.core.services.CargoService;
 import kg.founders.core.services.PaymentService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,6 +28,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     PaymentRepo repo;
     PaymentConverter converter;
+    CargoModelToCargoPaymentModelConverter cargoModelToCargoPaymentModelConverter;
+
+    CargoService cargoService;
 
     @Override
     public List<PaymentModel> getAll() {
@@ -33,7 +40,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentModel getById(int id) {
+    public PaymentModel getById(Long id) {
         return converter.convertPaymentToPaymentModel(repo.findById((long) id).orElse(null));
     }
 
@@ -62,6 +69,23 @@ public class PaymentServiceImpl implements PaymentService {
             payment.get().markDeleted();
             repo.save(payment.get());
         }
+    }
+
+    @Override
+    public List<PaymentModel> getAllPaymentsByCargo(Long id) {
+        return repo.findAllByCargoId(id).stream().map(converter::convertPaymentToPaymentModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CargoPaymentModel> getAllCargoPayments() {
+        List<CargoPaymentModel> cargoPaymentModels = cargoService.getAllActive()
+                .stream()
+                .map(cargoModelToCargoPaymentModelConverter::convertCargoToCargoPaymentModel)
+                .collect(Collectors.toList()).stream().map(cargoPaymentModel -> {
+                    cargoPaymentModel.setPaymentModelList(getAllPaymentsByCargo(cargoPaymentModel.getId()));
+                    return cargoPaymentModel;
+                }).collect(Collectors.toList());
+        return cargoPaymentModels;
     }
 
 

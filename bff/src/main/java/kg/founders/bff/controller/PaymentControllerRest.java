@@ -1,6 +1,7 @@
 package kg.founders.bff.controller;
 
 import kg.founders.core.enums.permission.PermissionType;
+import kg.founders.core.model.CargoPaymentModel;
 import kg.founders.core.model.PaymentModel;
 import kg.founders.core.services.PaymentService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
@@ -33,7 +34,7 @@ public class PaymentControllerRest {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PaymentModel> getById(@PathVariable int id) {
+    public ResponseEntity<PaymentModel> getById(@PathVariable Long id) {
         PaymentModel paymentModel = paymentService.getById(id);
         if (paymentModel == null)
             return ResponseEntity.notFound().build();
@@ -54,6 +55,11 @@ public class PaymentControllerRest {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         paymentService.delete(id);
+    }
+
+    @GetMapping("/get-all-cargo-payment-models")
+    public List<CargoPaymentModel> getAllGCargoPaymentModels() {
+        return paymentService.getAllCargoPayments();
     }
 
 }
