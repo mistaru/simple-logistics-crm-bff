@@ -18,7 +18,13 @@ public enum PermissionType implements GrantedAuthority {
     TEST("", ScreenType.GENERAL, "", ""),
     AUTH("Пользователи", ScreenType.ADMINISTRATION, "auth", "mdi-account-group"),
     PERMISSION("Доступы", ScreenType.ADMINISTRATION, "permission", "mdi-security"),
-    ROLE("Роли", ScreenType.ADMINISTRATION, "roles", "mdi-account-box-edit-outline");
+    ROLE("Роли", ScreenType.ADMINISTRATION, "roles", "mdi-account-box-edit-outline"),
+    CARGO("Грузы", ScreenType.GENERAL, "cargo", "mdi-package-variant"),
+    CITY("Города", ScreenType.DICT_SCREEN, "city", "mdi-city"),
+    CLIENT("Клиенты", ScreenType.GENERAL, "client", "mdi-account-tie"),
+    COUNTRY("Страны", ScreenType.DICT_SCREEN, "country", "mdi-earth-plus"),
+    TRUCK("Фуры", ScreenType.GENERAL, "truck", "mdi-truck"),
+    WAREHOUSE("Склады", ScreenType.GENERAL, "warehouse", "mdi-store");
 
     String description;
     ScreenType screenType;

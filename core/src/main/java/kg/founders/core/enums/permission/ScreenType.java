@@ -12,6 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 public enum ScreenType {
     GENERAL(null, ""),
     ADMINISTRATION("Безопасность", "mdi-badge-account-horizontal"),
+    DICT_SCREEN("Справочники", "mdi-book-open-variant"),
     ;
 
     String description;
