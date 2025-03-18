@@ -47,4 +47,9 @@ public class CountryDictServiceImpl implements CountryDictService {
         countryDictRepo.save(countryDict);
         return countryDictConverter.convertFromEntity(countryDict);
     }
+
+    @Override
+    public void delete(Long id) {
+        countryDictRepo.deleteById(id);
+    }
 }
