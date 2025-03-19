@@ -47,4 +47,9 @@ public class CityDictServiceImpl implements CityDictService {
         cityDictRepo.save(cityDict);
         return cityDictConverter.convertFromEntity(cityDict);
     }
+
+    @Override
+    public void delete(Long id) {
+        cityDictRepo.deleteById(id);
+    }
 }
