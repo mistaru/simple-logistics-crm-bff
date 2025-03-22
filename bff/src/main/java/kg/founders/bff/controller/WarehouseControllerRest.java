@@ -4,12 +4,15 @@ import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.model.WarehouseModel;
 import kg.founders.core.services.WarehouseService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
+import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
@@ -22,6 +25,13 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class WarehouseControllerRest {
     WarehouseService warehouseService;
+
+
+    @GetMapping("/all")
+    @ManualPermissionControl
+    public List<WarehouseModel> getAll() {
+        return warehouseService.getAll();
+    }
 
     @GetMapping
     public Page<WarehouseModel> get(Pageable pageable) {
