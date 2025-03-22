@@ -15,4 +15,6 @@ public interface CountryDictService {
     CountryDictModel create(CountryDictModel countryDictModel) throws Exception ;
 
     CountryDictModel update(CountryDictModel countryDictModel);
+
+    void delete(Long id);
 }

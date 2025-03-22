@@ -15,4 +15,6 @@ public interface CityDictService {
     CityDictModel create(CityDictModel cityDictModel) throws Exception ;
 
     CityDictModel update(CityDictModel cityDictModel);
+
+    void delete(Long id);
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -27,17 +28,38 @@ public class Truck extends BaseEntity {
     @Column(nullable = false, name = "registration_country")
     String registrationCountry;
 
-    @Column(nullable = false, name = "volume_m3")
-    double volumeM3;
+    @Column(nullable = false, name = "volume_total_m3")
+    double volumeTotalM3;
+
+    @Column(nullable = false, name = "volume_occupied_m3")
+    double volumeOccupiedM3;
+
+    @Column(nullable = false, name = "volume_available_m3")
+    double volumeAvailableM3;
 
     @Column(nullable = false, name = "departure_warehouse")
     String departureWarehouse;
 
-    @Column(nullable = false, name = "delivery_warehouse")
-    String deliveryWarehouse;
+    @Column(nullable = false, name = "arrival_warehouse")
+    String arrivalWarehouse;
+
+    @Column(nullable = false, name = "driver_fullname")
+    String driverFullname;
 
     @Column(nullable = false, name = "driver_phone")
     String driverPhone;
+
+    @Column(nullable = false, name = "departure_date_planned")
+    Timestamp departureDatePlanned;
+
+    @Column(nullable = false, name = "departure_date_actual")
+    Timestamp departureDateActual;
+
+    @Column(nullable = false, name = "arrival_date_planned")
+    Timestamp arrivalDatePlanned;
+
+    @Column(nullable = false, name = "arrival_date_actual")
+    Timestamp arrivalDateActual;
 
     @Column(name = "additional_information")
     String additionalInformation;

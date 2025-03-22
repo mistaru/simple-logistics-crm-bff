@@ -1,5 +1,6 @@
 package kg.founders.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import kg.founders.core.enums.CargoStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,10 @@ public class CargoModel {
     double weight;
     double volume;
     int quantity;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     Timestamp warehouseArrivalDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     Timestamp shipmentDate;
     ClientModel clientModel;
     CargoStatus status;

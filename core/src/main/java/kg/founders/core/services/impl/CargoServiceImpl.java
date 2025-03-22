@@ -51,7 +51,7 @@ public class CargoServiceImpl implements CargoService {
                 cargo.getQuantity(),
                 cargo.getWarehouseArrivalDate(),
                 cargo.getShipmentDate(),
-                cargo.getClient().toModel(),
+                null, //cargo.getClient().toModel(), временное решение пока не засетим клиента
                 cargo.getStatus(),
                 cargo.getDescription()
         );

@@ -20,9 +20,8 @@ import static lombok.AccessLevel.PRIVATE;
 @RestController
 @RequestMapping("/api/truck")
 @AllArgsConstructor(access = PACKAGE)
-@HasPermission(value = PermissionType.PERMISSION)
+@HasPermission(value = PermissionType.TRUCK)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-@CrossOrigin(origins = "http://localhost:8080")
 public class TruckControllerRest {
     TruckService truckService;
 

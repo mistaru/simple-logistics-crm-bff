@@ -3,6 +3,8 @@ package kg.founders.core.model;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @ToString
@@ -12,9 +14,17 @@ public class TruckModel {
 
     Long id;
     String registrationCountry;
-    double volumeM3;
+    Double volumeTotalM3;
+    Double volumeOccupiedM3;
+    Double volumeAvailableM3;
     String departureWarehouse;
-    String deliveryWarehouse;
+    String arrivalWarehouse;
+    String driverFullname;
     String driverPhone;
+    Timestamp departureDatePlanned;
+    Timestamp departureDateActual;
+    Timestamp arrivalDatePlanned;
+    Timestamp arrivalDateActual;
     String additionalInformation;
+
 }

@@ -4,6 +4,7 @@ import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.model.dictionaries.CityDictModel;
 import kg.founders.core.services.dictionaries.CityDictService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
+import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ import static lombok.AccessLevel.PRIVATE;
 @RestController
 @RequestMapping("/api/city")
 @AllArgsConstructor(access = PACKAGE)
-@HasPermission(value = PermissionType.PERMISSION)
+@HasPermission(value = PermissionType.CITY)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CityDictControllerRest {
     CityDictService cityDictService;
@@ -43,5 +44,10 @@ public class CityDictControllerRest {
     @PutMapping
     public CityDictModel update(@RequestBody CityDictModel cityDictModel) {
         return cityDictService.update(cityDictModel);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        cityDictService.delete(id);
     }
 }

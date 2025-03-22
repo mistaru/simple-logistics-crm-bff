@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -38,5 +41,11 @@ public class WarehouseServiceImpl implements WarehouseService {
         Warehouse warehouse = warehouseConverter.convertFromModel(warehouseModel);
         warehouseRepo.save(warehouse);
         return warehouseConverter.convertFromEntity(warehouse);
+    }
+
+    @Override
+    public List<WarehouseModel> getAll() {
+        return warehouseRepo.findAll().stream().map(warehouseConverter::convertFromEntity).collect(Collectors.toList());
+
     }
 }

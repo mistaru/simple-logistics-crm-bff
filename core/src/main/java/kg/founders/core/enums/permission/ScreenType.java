@@ -11,7 +11,8 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public enum ScreenType {
     GENERAL(null, ""),
-    ADMINISTRATION("Администрирование", "mdi-badge-account-horizontal"),
+    ADMINISTRATION("Безопасность", "mdi-badge-account-horizontal"),
+    DICT_SCREEN("Справочники", "mdi-book-open-variant"),
     ;
 
     String description;
