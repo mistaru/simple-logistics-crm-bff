@@ -14,9 +14,9 @@ public class TruckModel {
 
     Long id;
     String registrationCountry;
-    double volumeTotalM3;
-    double volumeOccupiedM3;
-    double volumeAvailableM3;
+    Double volumeTotalM3;
+    Double volumeOccupiedM3;
+    Double volumeAvailableM3;
     String departureWarehouse;
     String arrivalWarehouse;
     String driverFullname;

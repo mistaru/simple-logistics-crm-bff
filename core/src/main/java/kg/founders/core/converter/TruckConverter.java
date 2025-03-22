@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -36,23 +38,55 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         truckModel.setAdditionalInformation(truck.getAdditionalInformation());
         return truckModel;
     }
-
+    
     public Truck convertTruckModelToTruck(TruckModel truckModel) {
         Truck truck = new Truck();
+
         truck.setId(truckModel.getId());
-        truck.setRegistrationCountry(truckModel.getRegistrationCountry());
-        truck.setVolumeTotalM3(truckModel.getVolumeTotalM3());
-        truck.setVolumeOccupiedM3(truckModel.getVolumeOccupiedM3());
-        truck.setVolumeAvailableM3(truckModel.getVolumeAvailableM3());
-        truck.setDepartureWarehouse(truckModel.getDepartureWarehouse());
-        truck.setArrivalWarehouse(truckModel.getArrivalWarehouse());
-        truck.setDriverFullname(truckModel.getDriverFullname());
-        truck.setDriverPhone(truckModel.getDriverPhone());
-        truck.setDepartureDatePlanned(truckModel.getDepartureDatePlanned());
-        truck.setDepartureDateActual(truckModel.getDepartureDateActual());
-        truck.setArrivalDatePlanned(truckModel.getArrivalDatePlanned());
-        truck.setArrivalDateActual(truckModel.getArrivalDateActual());
-        truck.setAdditionalInformation(truckModel.getAdditionalInformation());
+        truck.setRegistrationCountry(
+                truckModel.getRegistrationCountry() != null ? truckModel.getRegistrationCountry() : "Не указано"
+        );
+        truck.setVolumeTotalM3(
+                truckModel.getVolumeTotalM3() != null ? truckModel.getVolumeTotalM3() : 0.0
+        );
+        truck.setVolumeOccupiedM3(
+                truckModel.getVolumeOccupiedM3() != null ? truckModel.getVolumeOccupiedM3() : 0.0
+        );
+        truck.setVolumeAvailableM3(
+                truckModel.getVolumeAvailableM3() != null ? truckModel.getVolumeAvailableM3() : 0.0
+        );
+        truck.setDepartureWarehouse(
+                truckModel.getDepartureWarehouse() != null ? truckModel.getDepartureWarehouse() : "Не указан"
+        );
+        truck.setArrivalWarehouse(
+                truckModel.getArrivalWarehouse() != null ? truckModel.getArrivalWarehouse() : "Не указан"
+        );
+        truck.setDriverFullname(
+                truckModel.getDriverFullname() != null ? truckModel.getDriverFullname() : "Неизвестный водитель"
+        );
+        truck.setDriverPhone(
+                truckModel.getDriverPhone() != null ? truckModel.getDriverPhone() : "Не указан"
+        );
+
+        LocalDateTime now = LocalDateTime.now();
+
+        truck.setDepartureDatePlanned(
+                truckModel.getDepartureDatePlanned() != null ? truckModel.getDepartureDatePlanned() : Timestamp.valueOf(now)
+        );
+        truck.setDepartureDateActual(
+                truckModel.getDepartureDateActual() != null ? truckModel.getDepartureDateActual() : Timestamp.valueOf(now)
+        );
+        truck.setArrivalDatePlanned(
+                truckModel.getArrivalDatePlanned() != null ? truckModel.getArrivalDatePlanned() : Timestamp.valueOf(now)
+        );
+        truck.setArrivalDateActual(
+                truckModel.getArrivalDateActual() != null ? truckModel.getArrivalDateActual() : Timestamp.valueOf(now)
+        );
+
+        truck.setAdditionalInformation(
+                truckModel.getAdditionalInformation() != null ? truckModel.getAdditionalInformation() : "Нет дополнительной информации"
+        );
+
         return truck;
     }
 
