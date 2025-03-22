@@ -21,7 +21,7 @@ import static lombok.AccessLevel.PRIVATE;
 @RestController
 @RequestMapping("/api/country")
 @AllArgsConstructor(access = PACKAGE)
-@HasPermission(value = PermissionType.PERMISSION)
+@HasPermission(value = PermissionType.COUNTRY)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CountryDictControllerRest {
     CountryDictService countryDictService;

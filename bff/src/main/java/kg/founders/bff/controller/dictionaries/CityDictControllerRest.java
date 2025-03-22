@@ -21,7 +21,7 @@ import static lombok.AccessLevel.PRIVATE;
 @RestController
 @RequestMapping("/api/city")
 @AllArgsConstructor(access = PACKAGE)
-@HasPermission(value = PermissionType.PERMISSION)
+@HasPermission(value = PermissionType.CITY)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CityDictControllerRest {
     CityDictService cityDictService;

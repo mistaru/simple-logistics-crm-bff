@@ -22,7 +22,7 @@ import static lombok.AccessLevel.PRIVATE;
 @RestController
 @RequestMapping("/api/client")
 @AllArgsConstructor(access = PACKAGE)
-@HasPermission(value = PermissionType.PERMISSION)
+@HasPermission(value = PermissionType.CLIENT)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ClientControllerRest {
     ClientService clientService;

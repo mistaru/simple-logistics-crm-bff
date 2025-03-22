@@ -18,7 +18,7 @@ import static lombok.AccessLevel.PRIVATE;
 @RestController
 @RequestMapping("/api/warehouse")
 @AllArgsConstructor(access = PACKAGE)
-@HasPermission(value = PermissionType.PERMISSION)
+@HasPermission(value = PermissionType.WAREHOUSE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class WarehouseControllerRest {
     WarehouseService warehouseService;
