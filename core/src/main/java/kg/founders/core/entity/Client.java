@@ -29,6 +29,9 @@ public class Client extends BaseEntity {
     @Column(name = "FULL_NAME", nullable = false)
     String fullName;
 
+    @Column(name = "CLIENT_CODE", nullable = false)
+    String clientCode;
+
     @Column(name = "PHONE_NUMBER", nullable = false, unique = true)
     String phoneNumber;
 
@@ -45,6 +48,7 @@ public class Client extends BaseEntity {
         return new ClientModel(
                 id,
                 fullName,
+                clientCode,
                 phoneNumber,
                 whatsappNumber,
                 email,

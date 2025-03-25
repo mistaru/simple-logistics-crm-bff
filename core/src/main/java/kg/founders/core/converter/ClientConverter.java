@@ -20,6 +20,7 @@ public class ClientConverter extends ModelConverter<ClientModel, Client> {
         ClientModel model = new ClientModel();
         model.setId(entity.getId());
         model.setFullName(entity.getFullName());
+        model.setClientCode(entity.getClientCode());
         model.setPhoneNumber(entity.getPhoneNumber());
         model.setWhatsappNumber(entity.getWhatsappNumber());
         model.setEmail(entity.getEmail());
@@ -31,6 +32,7 @@ public class ClientConverter extends ModelConverter<ClientModel, Client> {
         Client entity = new Client();
         entity.setId(model.getId());
         entity.setFullName(model.getFullName());
+        entity.setClientCode(model.getClientCode());
         entity.setPhoneNumber(model.getPhoneNumber());
         entity.setWhatsappNumber(model.getWhatsappNumber());
         entity.setEmail(model.getEmail());

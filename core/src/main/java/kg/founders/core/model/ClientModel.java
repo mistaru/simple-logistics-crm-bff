@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class ClientModel {
     Long id;
     String fullName;
+    String clientCode;
     String phoneNumber;
     String whatsappNumber;
     String email;
