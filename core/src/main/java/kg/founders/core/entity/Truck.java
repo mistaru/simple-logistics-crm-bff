@@ -64,4 +64,7 @@ public class Truck extends BaseEntity {
     @Column(name = "additional_information")
     String additionalInformation;
 
+    @Column(nullable = false, name = "service_fee")
+    double serviceFee;
+
 }
