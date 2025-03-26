@@ -3,7 +3,6 @@ package kg.founders.core.services.impl;
 import kg.founders.core.converter.ClientConverter;
 import kg.founders.core.entity.Client;
 import kg.founders.core.model.ClientModel;
-import kg.founders.core.model.dictionaries.CountryDictModel;
 import kg.founders.core.repo.ClientRepo;
 import kg.founders.core.services.ClientService;
 import lombok.AllArgsConstructor;

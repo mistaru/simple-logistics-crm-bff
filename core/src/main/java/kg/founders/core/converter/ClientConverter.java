@@ -17,6 +17,7 @@ public class ClientConverter extends ModelConverter<ClientModel, Client> {
     }
 
     private ClientModel convertToModel(Client entity) {
+        if (entity == null) return null;
         ClientModel model = new ClientModel();
         model.setId(entity.getId());
         model.setFullName(entity.getFullName());
