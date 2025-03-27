@@ -3,8 +3,6 @@ package kg.founders.core.converter.dictionaries;
 import kg.founders.core.converter.ModelConverter;
 import kg.founders.core.entity.dictionaries.CityDict;
 import kg.founders.core.model.dictionaries.CityDictModel;
-import kg.founders.core.model.dictionaries.CountryDictModel;
-import liquibase.pro.packaged.C;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

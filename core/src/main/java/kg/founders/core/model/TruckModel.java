@@ -26,5 +26,6 @@ public class TruckModel {
     Timestamp arrivalDatePlanned;
     Timestamp arrivalDateActual;
     String additionalInformation;
+    Double serviceFee;
 
 }

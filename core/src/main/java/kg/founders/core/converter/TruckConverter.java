@@ -36,6 +36,7 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         truckModel.setArrivalDatePlanned(truck.getArrivalDatePlanned());
         truckModel.setArrivalDateActual(truck.getArrivalDateActual());
         truckModel.setAdditionalInformation(truck.getAdditionalInformation());
+        truckModel.setServiceFee(truck.getServiceFee());
         return truckModel;
     }
     
@@ -85,6 +86,10 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
 
         truck.setAdditionalInformation(
                 truckModel.getAdditionalInformation() != null ? truckModel.getAdditionalInformation() : "Нет дополнительной информации"
+        );
+
+        truck.setServiceFee(
+                truckModel.getServiceFee() != null ? truckModel.getServiceFee() : 0.0
         );
 
         return truck;

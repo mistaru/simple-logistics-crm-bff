@@ -1,5 +1,6 @@
 package kg.founders.core.services.impl;
 
+import kg.founders.core.converter.CargoConverter;
 import kg.founders.core.entity.Cargo;
 import kg.founders.core.enums.CargoStatus;
 import kg.founders.core.model.CargoModel;
@@ -9,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,60 +22,35 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CargoServiceImpl implements CargoService {
     CargoRepo repo;
+    CargoConverter converter;
 
     // Получение списка всех грузов
+    @Override
     public List<CargoModel> findALl() {
         return repo.findAll().stream()
-                .map(this::convertToModel)
+                .map(converter::convertFromEntity)
                 .collect(Collectors.toList());
     }
 
     // Добавление или обновление груза
+    @Override
     public CargoModel saveCargo(CargoModel cargoModel) {
-        Cargo cargo = convertToEntity(cargoModel);
+        Cargo cargo = converter.convertFromModel(cargoModel);
         cargo = repo.save(cargo);
-        return convertToModel(cargo);
+        return converter.convertFromEntity(cargo);
     }
 
     // Удаление груза по ID
+    @Override
     public void deleteCargo(Long id) {
         repo.deleteById(id);
-    }
-
-    // Преобразование из Entity в Model
-    private CargoModel convertToModel(Cargo cargo) {
-        return new CargoModel(
-                cargo.getId(),
-                cargo.getWeight(),
-                cargo.getVolume(),
-                cargo.getQuantity(),
-                cargo.getWarehouseArrivalDate(),
-                cargo.getShipmentDate(),
-                null, //cargo.getClient().toModel(), временное решение пока не засетим клиента
-                cargo.getStatus(),
-                cargo.getDescription()
-        );
     }
 
     @Override
     public List<CargoModel> getAllActive() {
         return repo.findAllByRdtIsNullAndStatusNotIn(List.of(CargoStatus.DELIVERED_TO_CLIENT))
                 .stream()
-                .map(this::convertToModel)
+                .map(converter::convertFromEntity)
                 .collect(Collectors.toList());
-    }
-
-    // Преобразование из Model в Entity
-    private Cargo convertToEntity(CargoModel model) {
-        Cargo cargo = new Cargo();
-        cargo.setId(model.getId());
-        cargo.setWeight(model.getWeight());
-        cargo.setVolume(model.getVolume());
-        cargo.setQuantity(model.getQuantity());
-        cargo.setWarehouseArrivalDate(model.getWarehouseArrivalDate());
-        cargo.setShipmentDate(model.getShipmentDate());
-        cargo.setStatus(model.getStatus());
-        cargo.setDescription(model.getDescription());
-        return cargo;
     }
 }

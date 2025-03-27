@@ -6,11 +6,10 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
 public class ClientModel {
     Long id;
     String fullName;
+    String clientCode;
     String phoneNumber;
     String whatsappNumber;
     String email;

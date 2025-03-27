@@ -2,7 +2,6 @@ package kg.founders.bff.controller;
 
 import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.model.ClientModel;
-import kg.founders.core.model.dictionaries.CountryDictModel;
 import kg.founders.core.services.ClientService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
