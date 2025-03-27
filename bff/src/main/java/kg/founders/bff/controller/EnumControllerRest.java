@@ -1,6 +1,7 @@
 package kg.founders.bff.controller;
 
 import kg.founders.core.enums.CargoStatus;
+import kg.founders.core.enums.PaymentStatus;
 import kg.founders.core.model.EnumModel;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
 import lombok.AllArgsConstructor;
@@ -21,5 +22,11 @@ public class EnumControllerRest {
     @ManualPermissionControl
     public List<EnumModel> getCargoStatuses() {
         return CargoStatus.getAllToModel();
+    }
+
+    @GetMapping("/paymentStatuses")
+    @ManualPermissionControl
+    public List<EnumModel> getPaymentStatuses() {
+        return PaymentStatus.getAllToModel();
     }
 }
