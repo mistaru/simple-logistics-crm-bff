@@ -9,18 +9,18 @@ VALUES (nextval('cargo_SEQ'), '2025-03-23 01:26:04.082359', null, null, '2025-03
 
 
 INSERT INTO client (id, cdt, created_by_id, created_by_table, mdt, modified_by_id, modified_by_table, rdt,
-                    additional_info, email, full_name, phone_number, whatsapp_number)
+                    additional_info, client_code, email, full_name, phone_number, whatsapp_number)
 VALUES (nextval('client_SEQ'), '2025-03-23 01:54:50.653695', 9999, 'AUTH', '2025-03-23 01:54:50.653695', 9999, 'AUTH',
-        null, 'дополнительная информация', 'kasymovargen996@gmail.com', 'Касымов Арген Айбекович', '0708654585',
+        null, 'дополнительная информация', 'client_01', 'kasymovargen996@gmail.com', 'Касымов Арген Айбекович', '0708654585',
         '0708654585');
 
 
 INSERT INTO truck (id, cdt, created_by_id, created_by_table, mdt, modified_by_id, modified_by_table, rdt,
-                   additional_information, departure_warehouse, driver_phone, registration_country, arrival_date_actual,
+                   additional_information, departure_warehouse, driver_phone, registration_country, service_fee, arrival_date_actual,
                    arrival_date_planned, arrival_warehouse, departure_date_actual, departure_date_planned,
                    driver_fullname, volume_available_m3, volume_occupied_m3, volume_total_m3)
 VALUES (nextval('truck_SEQ'), '2025-03-22 21:08:39.726900', null, null, '2025-03-23 02:01:26.106978', 9999, 'AUTH',
-        null, 'Вроде норм водила', 'Склад 1', '89250121324', 'Россия', '2025-04-30 21:08:39.000000',
+        null, 'Вроде норм водила', 'Склад 1', '89250121324', 'Россия', 15, '2025-04-30 21:08:39.000000',
         '2025-04-30 21:08:39.000000', 'Склад 2', '2025-03-26 21:08:39.000000', '2025-03-26 21:08:39.000000',
         'Шамуродов Мурад', 65, 55, 120);
 

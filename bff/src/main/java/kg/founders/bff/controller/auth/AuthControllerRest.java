@@ -116,7 +116,7 @@ public class AuthControllerRest {
             return new ResponseMessage<>("Пользователь успешно сохранен", ResultCode.OK);
         } catch (Exception e) {
             log.error("AuthControllerRest : create {}", e.getMessage());
-            return new ResponseMessage<>("Ошибка при сохранении пользователя - " + e.getMessage(), ResultCode.FAIL);
+            return new ResponseMessage<>(null, ResultCode.FAIL, e.getMessage());
         }
     }
 
