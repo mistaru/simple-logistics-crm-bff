@@ -8,6 +8,7 @@ VALUES (15, 1, (SELECT id FROM logistic_roles WHERE name = 'admin')),
        (15, 7, (SELECT id FROM logistic_roles WHERE name = 'admin')),
        (15, 8, (SELECT id FROM logistic_roles WHERE name = 'admin')),
        (15, 9, (SELECT id FROM logistic_roles WHERE name = 'admin')),
+       (15, 10, (SELECT id FROM logistic_roles WHERE name = 'admin')),
        (4, 4, (SELECT id FROM logistic_roles WHERE name = 'manager')),
        (4, 7, (SELECT id FROM logistic_roles WHERE name = 'manager')),
        (4, 9, (SELECT id FROM logistic_roles WHERE name = 'manager'));
