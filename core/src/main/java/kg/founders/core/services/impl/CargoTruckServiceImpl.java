@@ -1,8 +1,14 @@
 package kg.founders.core.services.impl;
 
+import kg.founders.core.converter.CargoConverter;
+import kg.founders.core.converter.CargoTruckConverter;
+import kg.founders.core.converter.TruckConverter;
 import kg.founders.core.entity.Cargo;
 import kg.founders.core.entity.CargoTruck;
 import kg.founders.core.entity.Truck;
+import kg.founders.core.model.CargoModel;
+import kg.founders.core.model.CargoTruckModel;
+import kg.founders.core.model.TruckModel;
 import kg.founders.core.repo.CargoRepo;
 import kg.founders.core.repo.CargoTruckRepo;
 import kg.founders.core.repo.TruckRepository;
@@ -10,9 +16,11 @@ import kg.founders.core.services.CargoTruckService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PACKAGE;
@@ -22,41 +30,75 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PACKAGE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CargoTruckServiceImpl implements CargoTruckService {
+
     CargoTruckRepo cargoTruckRepo;
     CargoRepo cargoRepo;
     TruckRepository truckRepo;
+    CargoTruckConverter cargoTruckConverter;
+    CargoConverter cargoConverter;
+    TruckConverter truckConverter;
 
-    // Получить список грузов по ID грузовика
-    public List<Cargo> getCargosByTruckId(Long truckId) {
-        List<Long> cargoIds = cargoTruckRepo.findByTruckIdAndRdtIsNull(truckId)
-                .stream()
-                .map(CargoTruck::getCargoId)
+    @Override
+    @Transactional
+    public List<CargoTruckModel> getAll() {
+        return cargoTruckRepo.findAll().stream()
+                .filter(ct -> ct.getRdt() == null)
+                .map(cargoTruckConverter::convertCargoTruckToCargoTruckModel)
                 .collect(Collectors.toList());
-
-        return cargoRepo.findAllById(cargoIds);
     }
 
-    // Получить список грузовиков по ID груза
+    @Override
+    public CargoTruckModel create(CargoTruckModel cargoTruckModel) {
+        Truck truck = truckRepo.findById(cargoTruckModel.getTruck().getId()).orElseThrow();
+        List<Cargo> cargoes = cargoTruckModel.getCargos().stream().map(cargo -> cargoRepo.findById(cargo.getId()).orElseThrow()).collect(Collectors.toList());
+        for (Cargo cargo : cargoes) {
+            CargoTruck cargoTruck = new CargoTruck();
+            cargoTruck.setCargo(cargo);
+            cargoTruck.setTruck(truck);
+            cargoTruckRepo.save(cargoTruck);
+        }
+        return cargoTruckModel;
+    }
+
+    @Override
+    @Transactional
+    public CargoTruckModel getCargoTruckByTruckId(Long truckId) {
+        TruckModel truckModel = truckRepo.findById(truckId).stream()
+                .map(truckConverter::convertFromEntity)
+                .findFirst()
+                .orElseThrow();
+        List<CargoModel> cargoModels =  cargoTruckRepo.findAllByTruckIdAndRdtIsNull(truckId).stream()
+                .map(CargoTruck::getCargo)
+                .map(cargoConverter::convertFromEntity)
+                .collect(Collectors.toList());
+        CargoTruckModel cargoTruckModel = new CargoTruckModel();
+        cargoTruckModel.setTruck(truckModel);
+        cargoTruckModel.setCargos(cargoModels);
+        return cargoTruckModel;
+    }
+
+    @Override
     public List<Truck> getTrucksByCargoId(Long cargoId) {
-        List<Long> truckIds = cargoTruckRepo.findByCargoIdAndRdtIsNull(cargoId)
-                .stream()
-                .map(CargoTruck::getTruckId)
+        return cargoTruckRepo.findAllByCargoIdAndRdtIsNull(cargoId).stream()
+                .map(CargoTruck::getTruck)
                 .collect(Collectors.toList());
-
-        return truckRepo.findAllById(truckIds);
     }
 
+    @Override
     public void assignCargoToTruck(Long cargoId, Long truckId) {
+        Cargo cargo = cargoRepo.findById(cargoId).orElseThrow();
+        Truck truck = truckRepo.findById(truckId).orElseThrow();
+
         CargoTruck cargoTruck = new CargoTruck();
-        cargoTruck.setCargoId(cargoId);
-        cargoTruck.setTruckId(truckId);
+        cargoTruck.setCargo(cargo);
+        cargoTruck.setTruck(truck);
         cargoTruckRepo.save(cargoTruck);
     }
 
     public void unassignCargoFromTruck(Long cargoId, Long truckId) {
-        List<CargoTruck> cargoTrucks = cargoTruckRepo.findByCargoIdAndRdtIsNull(cargoId)
+        List<CargoTruck> cargoTrucks = cargoTruckRepo.findAllByCargoIdAndRdtIsNull(cargoId)
                 .stream()
-                .filter(ct -> ct.getTruckId().equals(truckId))
+                .filter(ct -> ct.getTruck().getId().equals(truckId))
                 .collect(Collectors.toList());
 
         cargoTrucks.forEach(cargoTruck -> {
@@ -64,4 +106,5 @@ public class CargoTruckServiceImpl implements CargoTruckService {
             cargoTruckRepo.save(cargoTruck);
         });
     }
+
 }

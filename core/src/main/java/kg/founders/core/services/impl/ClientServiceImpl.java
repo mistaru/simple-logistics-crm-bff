@@ -47,4 +47,21 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientModel> getAll() {
         return clientRepo.findAll().stream().map(clientConverter::convertFromEntity).collect(Collectors.toList());
     }
+
+    @Override
+    public ClientModel save(ClientModel model) {
+        Client client = clientConverter.convertFromModel(model);
+        return clientConverter.convertFromEntity(clientRepo.save(client));
+    }
+
+    @Override
+    public Client findByClientCode(String clientCode) {
+        return clientRepo.findByClientCode(clientCode);
+    }
+
+    @Override
+    public Client getClientById(Long id) {
+        return clientRepo.findById(id).orElseThrow();
+
+    }
 }

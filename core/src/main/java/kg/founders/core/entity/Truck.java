@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -66,5 +67,8 @@ public class Truck extends BaseEntity {
 
     @Column(nullable = false, name = "service_fee")
     double serviceFee;
+
+    @OneToMany(mappedBy = "truck", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<CargoTruck> cargoTrucks;
 
 }
