@@ -1,6 +1,7 @@
 package kg.founders.core.services;
 
 import kg.founders.core.model.CargoModel;
+import kg.founders.core.model.ReassignCargosRequest;
 
 import java.util.List;
 
@@ -13,4 +14,8 @@ public interface CargoService {
     List<CargoModel> findALlByManagerId(Long id);
 
     void reassign(Long managerId, Long cargoId);
+
+    void reassignAll(ReassignCargosRequest reassignCargosRequest);
+
+    boolean existsByManagerId(Long userId);
 }

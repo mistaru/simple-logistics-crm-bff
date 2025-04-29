@@ -3,6 +3,7 @@ package kg.founders.bff.controller;
 import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.exceptions.ForbiddenException;
 import kg.founders.core.model.CargoModel;
+import kg.founders.core.model.ReassignCargosRequest;
 import kg.founders.core.services.CargoService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
@@ -62,12 +63,25 @@ public class CargoControllerRest {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/reassign-all")
+    @ManualPermissionControl
+    public ResponseEntity<Void> reassignAll(@RequestBody ReassignCargosRequest reassignCargosRequest) {
+        if (!permissionHelper.isAdmin()) throw new ForbiddenException();
+        cargoService.reassignAll(reassignCargosRequest);
+        return ResponseEntity.ok().build();
+    }
+
     // Удаление груза
     @DeleteMapping("/{id}")
     @ManualPermissionControl
     public ResponseEntity<Void> deleteCargo(@PathVariable Long id) {
         cargoService.deleteCargo(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/is-linked")
+    public boolean activeCargo(@RequestParam Long userId) {
+        return cargoService.existsByManagerId(userId);
     }
 }
 

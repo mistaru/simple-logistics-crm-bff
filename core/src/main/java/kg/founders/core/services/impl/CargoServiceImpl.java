@@ -4,6 +4,7 @@ import kg.founders.core.converter.CargoConverter;
 import kg.founders.core.entity.Cargo;
 import kg.founders.core.enums.CargoStatus;
 import kg.founders.core.model.CargoModel;
+import kg.founders.core.model.ReassignCargosRequest;
 import kg.founders.core.repo.CargoRepo;
 import kg.founders.core.services.CargoService;
 import lombok.AllArgsConstructor;
@@ -68,5 +69,19 @@ public class CargoServiceImpl implements CargoService {
                 .orElseThrow(() -> new IllegalArgumentException("Cargo with id " + cargoId + " not found"));
         cargo.setManagerId(managerId);
         repo.save(cargo);
+    }
+
+    @Override
+    public void reassignAll(ReassignCargosRequest reassignCargosRequest) {
+        List<Cargo> cargoList = repo.findAllByManagerId(reassignCargosRequest.getFromUserId());
+        for (Cargo cargo : cargoList) {
+            cargo.setManagerId(reassignCargosRequest.getToUserId());
+            repo.save(cargo);
+        }
+    }
+
+    @Override
+    public boolean existsByManagerId(Long userId) {
+        return repo.existsByManagerId(userId);
     }
 }
