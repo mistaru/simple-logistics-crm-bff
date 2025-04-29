@@ -18,11 +18,10 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.Filter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PACKAGE;
@@ -119,12 +118,13 @@ public class CargoTruckServiceImpl implements CargoTruckService {
     @Override
     public List<CargoModel> getUnassignedCargos() {
         List<Cargo> allCargos = cargoRepo.findAll();
-        List<Cargo> assignedCargos = cargoTruckRepo.findAll().stream()
-                .map(CargoTruck::getCargo)
-                .collect(Collectors.toList());
+        Set<Long> assignedCargoIds = cargoTruckRepo.findAll().stream()
+                .filter(cargoTruck -> cargoTruck.getRdt() == null)
+                .map(cargoTruck -> cargoTruck.getCargo().getId())
+                .collect(Collectors.toSet());
 
         return allCargos.stream()
-                .filter(cargo -> !assignedCargos.contains(cargo))
+                .filter(cargo -> !assignedCargoIds.contains(cargo.getId()))
                 .map(cargoConverter::convertFromEntity)
                 .collect(Collectors.toList());
     }

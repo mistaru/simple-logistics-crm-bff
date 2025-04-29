@@ -44,4 +44,14 @@ public class CargoTruckControllerRest {
         return cargoTruckService.getUnassignedCargos();
     }
 
+    @PostMapping("/assign")
+    public void assignCargoToTruck(@RequestParam Long cargoId, @RequestParam Long truckId){
+        cargoTruckService.assignCargoToTruck(cargoId, truckId);
+    }
+
+    @PostMapping("/unassign")
+    public void unassignCargoFromTruck(@RequestParam Long cargoId, @RequestParam Long truckId){
+        cargoTruckService.unassignCargoFromTruck(cargoId, truckId);
+    }
+
 }
