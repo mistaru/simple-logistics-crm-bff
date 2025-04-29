@@ -32,6 +32,14 @@ public class CargoServiceImpl implements CargoService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<CargoModel> findALlByManagerId(Long id) {
+        return repo.findAllByManagerId(id)
+                .stream()
+                .map(converter::convertFromEntity)
+                .collect(Collectors.toList());
+    }
+
     // Добавление или обновление груза
     @Override
     public CargoModel saveCargo(CargoModel cargoModel) {
@@ -52,5 +60,13 @@ public class CargoServiceImpl implements CargoService {
                 .stream()
                 .map(converter::convertFromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void reassign(Long managerId, Long cargoId) {
+        Cargo cargo = repo.findById(cargoId)
+                .orElseThrow(() -> new IllegalArgumentException("Cargo with id " + cargoId + " not found"));
+        cargo.setManagerId(managerId);
+        repo.save(cargo);
     }
 }

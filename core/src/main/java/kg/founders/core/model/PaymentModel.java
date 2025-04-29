@@ -24,4 +24,6 @@ public class PaymentModel {
     Timestamp actual;
 
     String comment;
+
+    Long managerId;
 }

@@ -37,4 +37,6 @@ public class Payment extends BaseEntity {
     Timestamp actual;
 
     String comment;
+
+    Long managerId;
 }

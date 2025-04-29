@@ -10,4 +10,7 @@ public interface CargoService {
     void deleteCargo(Long id);
     List<CargoModel> getAllActive();
 
+    List<CargoModel> findALlByManagerId(Long id);
+
+    void reassign(Long managerId, Long cargoId);
 }

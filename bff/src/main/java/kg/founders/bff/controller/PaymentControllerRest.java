@@ -1,10 +1,13 @@
 package kg.founders.bff.controller;
 
 import kg.founders.core.enums.permission.PermissionType;
+import kg.founders.core.exceptions.ForbiddenException;
 import kg.founders.core.model.CargoPaymentModel;
 import kg.founders.core.model.PaymentModel;
 import kg.founders.core.services.PaymentService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
+import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
+import kg.founders.core.util.PermissionHelper;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +30,12 @@ import static lombok.AccessLevel.PRIVATE;
 public class PaymentControllerRest {
 
     PaymentService paymentService;
+    PermissionHelper permissionHelper;
 
     @GetMapping
     public List<PaymentModel> getAll() {
-        return paymentService.getAll();
+        if (permissionHelper.isAdmin()) return paymentService.getAll();
+        else return paymentService.findAllByManagerId(permissionHelper.currentUserId());
     }
 
     @GetMapping("/{id}")
@@ -43,6 +48,7 @@ public class PaymentControllerRest {
 
     @PostMapping
     public PaymentModel create(@RequestBody PaymentModel paymentModel) {
+        paymentModel.setManagerId(permissionHelper.currentUserId());
         return paymentService.save(paymentModel);
     }
 
@@ -60,6 +66,14 @@ public class PaymentControllerRest {
     @GetMapping("/get-all-cargo-payment-models")
     public List<CargoPaymentModel> getAllGCargoPaymentModels() {
         return paymentService.getAllCargoPayments();
+    }
+
+    @PostMapping("/reassign")
+    @ManualPermissionControl
+    public ResponseEntity<Void> reassign(@RequestBody Long managerId, @RequestBody Long paymentId) {
+        if (permissionHelper.isAdmin()) throw new ForbiddenException();
+        paymentService.reassign(managerId, paymentId);
+        return ResponseEntity.ok().build();
     }
 
 }

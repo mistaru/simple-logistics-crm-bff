@@ -32,6 +32,7 @@ public class CargoConverter extends ModelConverter<CargoModel, Cargo> {
         model.setClient(clientConverter.convertFromEntity(entity.getClient()));
         model.setStatus(entity.getStatus());
         model.setDescription(entity.getDescription());
+        model.setManagerId(entity.getManagerId());
         return model;
     }
 
@@ -46,6 +47,7 @@ public class CargoConverter extends ModelConverter<CargoModel, Cargo> {
         cargo.setClient(clientConverter.convertFromModel(model.getClient()));
         cargo.setStatus(model.getStatus());
         cargo.setDescription(model.getDescription());
+        cargo.setManagerId(model.getManagerId());
         return cargo;
     }
 }

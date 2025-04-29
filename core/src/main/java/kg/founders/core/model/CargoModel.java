@@ -25,4 +25,5 @@ public class CargoModel {
     ClientModel client;
     CargoStatus status;
     String description;
+    Long managerId;
 }

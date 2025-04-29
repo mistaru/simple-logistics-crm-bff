@@ -36,4 +36,5 @@ public class Cargo extends BaseEntity {
     @Enumerated(EnumType.STRING)
     CargoStatus status;
     String description;
+    Long managerId;
 }

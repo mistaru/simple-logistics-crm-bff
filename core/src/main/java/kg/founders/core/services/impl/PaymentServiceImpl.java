@@ -40,6 +40,13 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public List<PaymentModel> findAllByManagerId(Long managerId) {
+        return repo.findAllByManagerId(managerId).stream()
+                .filter(payment -> payment.getRdt() == null)
+                .map(converter::convertPaymentToPaymentModel).collect(Collectors.toList());
+    }
+
+    @Override
     public PaymentModel getById(Long id) {
         return converter.convertPaymentToPaymentModel(repo.findById((long) id).orElse(null));
     }
@@ -88,5 +95,11 @@ public class PaymentServiceImpl implements PaymentService {
         return cargoPaymentModels;
     }
 
-
+    @Override
+    public void reassign(Long managerId, Long paymentId) {
+        Payment payment = repo.findById(paymentId)
+                .orElseThrow(() -> new IllegalArgumentException("Payment not found"));
+        payment.setManagerId(managerId);
+        repo.save(payment);
+    }
 }

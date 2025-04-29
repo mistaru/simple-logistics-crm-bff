@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PaymentRepo extends JpaRepository<Payment, Long> {
     List<Payment> findAllByCargoId(Long cargoId);
+    List<Payment> findAllByManagerId(Long managerId);
 }

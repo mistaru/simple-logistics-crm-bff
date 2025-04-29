@@ -1,17 +1,26 @@
 package kg.founders.bff.controller;
 
+import kg.founders.bff.config.settings.TokenAuthFilter;
+import kg.founders.bff.config.settings.TokenContextHolder;
+import kg.founders.core.entity.auth.LogisticAuth;
+import kg.founders.core.entity.auth.permission.GrantHolder;
+import kg.founders.core.entity.auth.role.LogisticAuthRole;
 import kg.founders.core.enums.permission.PermissionType;
+import kg.founders.core.exceptions.ForbiddenException;
 import kg.founders.core.model.CargoModel;
 import kg.founders.core.services.CargoService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
+import kg.founders.core.util.PermissionHelper;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
@@ -20,22 +29,28 @@ import static lombok.AccessLevel.PRIVATE;
 @RestController
 @RequestMapping("/api/cargo")
 @AllArgsConstructor(access = PACKAGE)
-@HasPermission(value = PermissionType.CLIENT)
+@HasPermission(value = PermissionType.CARGO)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CargoControllerRest {
     private final CargoService cargoService;
+    private final PermissionHelper permissionHelper;
 
     // Получение списка грузов
     @GetMapping
     @ManualPermissionControl
     public List<CargoModel> findAll() {
-        return cargoService.findALl();
+        if (permissionHelper.isAdmin()) {
+            return cargoService.findALl();
+        } else {
+            return cargoService.findALlByManagerId(permissionHelper.currentUserId());
+        }
     }
 
     // Добавление нового груза
     @PostMapping
     @ManualPermissionControl
     public CargoModel createCargo(@RequestBody CargoModel cargoModel) {
+        cargoModel.setManagerId(permissionHelper.currentUserId());
         return cargoService.saveCargo(cargoModel);
     }
 
@@ -44,6 +59,14 @@ public class CargoControllerRest {
     @ManualPermissionControl
     public CargoModel updateCargo(@RequestBody CargoModel cargoModel) {
         return cargoService.saveCargo(cargoModel);
+    }
+
+    @PostMapping("/reassign")
+    @ManualPermissionControl
+    public ResponseEntity<Void> reassignCargo(@RequestBody Long managerId, @RequestBody Long cargoId) {
+        if (permissionHelper.isAdmin()) throw new ForbiddenException();
+        cargoService.reassign(managerId, cargoId);
+        return ResponseEntity.ok().build();
     }
 
     // Удаление груза
