@@ -64,7 +64,7 @@ public class CargoControllerRest {
     @PostMapping("/reassign")
     @ManualPermissionControl
     public ResponseEntity<Void> reassignCargo(@RequestBody Long managerId, @RequestBody Long cargoId) {
-        if (permissionHelper.isAdmin()) throw new ForbiddenException();
+        if (!permissionHelper.isAdmin()) throw new ForbiddenException();
         cargoService.reassign(managerId, cargoId);
         return ResponseEntity.ok().build();
     }

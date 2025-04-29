@@ -71,7 +71,7 @@ public class PaymentControllerRest {
     @PostMapping("/reassign")
     @ManualPermissionControl
     public ResponseEntity<Void> reassign(@RequestBody Long managerId, @RequestBody Long paymentId) {
-        if (permissionHelper.isAdmin()) throw new ForbiddenException();
+        if (!permissionHelper.isAdmin()) throw new ForbiddenException();
         paymentService.reassign(managerId, paymentId);
         return ResponseEntity.ok().build();
     }
