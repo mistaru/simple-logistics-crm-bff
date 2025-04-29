@@ -1,10 +1,5 @@
 package kg.founders.bff.controller;
 
-import kg.founders.bff.config.settings.TokenAuthFilter;
-import kg.founders.bff.config.settings.TokenContextHolder;
-import kg.founders.core.entity.auth.LogisticAuth;
-import kg.founders.core.entity.auth.permission.GrantHolder;
-import kg.founders.core.entity.auth.role.LogisticAuthRole;
 import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.exceptions.ForbiddenException;
 import kg.founders.core.model.CargoModel;
@@ -18,9 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
