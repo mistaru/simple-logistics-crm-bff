@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CargoTruckRepo extends JpaRepository<CargoTruck, Integer> {
-    List<CargoTruck> findByCargoIdAndRdtIsNull(Long cargoId);
+public interface CargoTruckRepo extends JpaRepository<CargoTruck, Long> {
+    List<CargoTruck> findAllByCargoIdAndRdtIsNull(Long cargoId);
 
-    List<CargoTruck> findByTruckIdAndRdtIsNull(Long truckId);
+    List<CargoTruck> findAllByTruckIdAndRdtIsNull(Long truckId);
+
+    List<CargoTruck> findAllByCargoIdOrTruckId(Long cargoId, Long truckId);
 
 }

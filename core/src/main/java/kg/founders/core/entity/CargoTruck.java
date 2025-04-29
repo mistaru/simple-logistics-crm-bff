@@ -24,6 +24,13 @@ public class CargoTruck extends BaseEntity {
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
     @GeneratedValue(generator = SEQ_NAME)
     Long id;
-    Long cargoId;
-    Long truckId;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "cargo_id", nullable = false)
+    Cargo cargo;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "truck_id", nullable = false)
+    Truck truck;
+
 }

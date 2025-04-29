@@ -1,5 +1,6 @@
 package kg.founders.core.services;
 
+import kg.founders.core.entity.Client;
 import kg.founders.core.model.ClientModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,11 @@ public interface ClientService {
     ClientModel update(ClientModel clientModel);
 
     List<ClientModel> getAll();
+
+    ClientModel save(ClientModel model);
+
+    Client findByClientCode(String clientCode);
+
+    Client getClientById(Long id);
+
 }

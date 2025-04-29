@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,10 +32,14 @@ public class Cargo extends BaseEntity {
     int quantity;
     Timestamp warehouseArrivalDate;
     Timestamp shipmentDate;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     Client client;
+
     @Enumerated(EnumType.STRING)
     CargoStatus status;
     String description;
+    @OneToMany(mappedBy = "cargo", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<CargoTruck> cargoTrucks;
     Long managerId;
 }
