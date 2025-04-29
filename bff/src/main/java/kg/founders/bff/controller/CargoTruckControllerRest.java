@@ -39,4 +39,9 @@ public class CargoTruckControllerRest {
         return cargoTruckService.getCargoTruckByTruckId(truckId);
     }
 
+    @GetMapping("/unassigned-cargos")
+    public List<CargoModel> getUnassignedCargos() {
+        return cargoTruckService.getUnassignedCargos();
+    }
+
 }

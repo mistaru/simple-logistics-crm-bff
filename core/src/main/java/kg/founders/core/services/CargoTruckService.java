@@ -23,4 +23,6 @@ public interface CargoTruckService {
 
     void unassignCargoFromTruck(Long cargoId, Long truckId);
 
+    List<CargoModel> getUnassignedCargos();
+
 }

@@ -18,7 +18,9 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.Filter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,10 +43,16 @@ public class CargoTruckServiceImpl implements CargoTruckService {
     @Override
     @Transactional
     public List<CargoTruckModel> getAll() {
-        return cargoTruckRepo.findAll().stream()
-                .filter(ct -> ct.getRdt() == null)
-                .map(cargoTruckConverter::convertCargoTruckToCargoTruckModel)
+        List<Truck> trucks = truckRepo.findAll().stream()
+                .filter(truck -> truck.getRdt() == null)
                 .collect(Collectors.toList());
+
+        List<CargoTruckModel> cargoTrucks = new ArrayList<>();
+        for (Truck truck : trucks) {
+            cargoTrucks.add(getCargoTruckByTruckId(truck.getId()));
+        }
+
+        return cargoTrucks;
     }
 
     @Override
@@ -95,6 +103,7 @@ public class CargoTruckServiceImpl implements CargoTruckService {
         cargoTruckRepo.save(cargoTruck);
     }
 
+    @Override
     public void unassignCargoFromTruck(Long cargoId, Long truckId) {
         List<CargoTruck> cargoTrucks = cargoTruckRepo.findAllByCargoIdAndRdtIsNull(cargoId)
                 .stream()
@@ -105,6 +114,19 @@ public class CargoTruckServiceImpl implements CargoTruckService {
             cargoTruck.setRdt(new Timestamp(System.currentTimeMillis()));
             cargoTruckRepo.save(cargoTruck);
         });
+    }
+
+    @Override
+    public List<CargoModel> getUnassignedCargos() {
+        List<Cargo> allCargos = cargoRepo.findAll();
+        List<Cargo> assignedCargos = cargoTruckRepo.findAll().stream()
+                .map(CargoTruck::getCargo)
+                .collect(Collectors.toList());
+
+        return allCargos.stream()
+                .filter(cargo -> !assignedCargos.contains(cargo))
+                .map(cargoConverter::convertFromEntity)
+                .collect(Collectors.toList());
     }
 
 }
