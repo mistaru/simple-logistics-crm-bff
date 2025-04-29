@@ -92,9 +92,15 @@ public class CargoTruckServiceImpl implements CargoTruckService {
     }
 
     @Override
+    @Transactional
     public void assignCargoToTruck(Long cargoId, Long truckId) {
         Cargo cargo = cargoRepo.findById(cargoId).orElseThrow();
         Truck truck = truckRepo.findById(truckId).orElseThrow();
+
+        double cargoTotalVolumeM3 = cargo.getVolume() * cargo.getQuantity();
+        truck.setVolumeOccupiedM3(truck.getVolumeOccupiedM3() + cargoTotalVolumeM3);
+        truck.setVolumeAvailableM3(truck.getVolumeAvailableM3() - cargoTotalVolumeM3);
+        truckRepo.save(truck);
 
         CargoTruck cargoTruck = new CargoTruck();
         cargoTruck.setCargo(cargo);
@@ -103,6 +109,7 @@ public class CargoTruckServiceImpl implements CargoTruckService {
     }
 
     @Override
+    @Transactional
     public void unassignCargoFromTruck(Long cargoId, Long truckId) {
         List<CargoTruck> cargoTrucks = cargoTruckRepo.findAllByCargoIdAndRdtIsNull(cargoId)
                 .stream()
@@ -110,6 +117,14 @@ public class CargoTruckServiceImpl implements CargoTruckService {
                 .collect(Collectors.toList());
 
         cargoTrucks.forEach(cargoTruck -> {
+            Truck truck = cargoTruck.getTruck();
+            Cargo cargo = cargoTruck.getCargo();
+
+            double cargoTotalVolumeM3 = cargo.getVolume() * cargo.getQuantity();
+            truck.setVolumeOccupiedM3(truck.getVolumeOccupiedM3() - cargoTotalVolumeM3);
+            truck.setVolumeAvailableM3(truck.getVolumeAvailableM3() + cargoTotalVolumeM3);
+            truckRepo.save(truck);
+
             cargoTruck.setRdt(new Timestamp(System.currentTimeMillis()));
             cargoTruckRepo.save(cargoTruck);
         });
