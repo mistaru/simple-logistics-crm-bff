@@ -80,7 +80,7 @@ public class CargoControllerRest {
     }
 
     @GetMapping("/is-linked")
-    public boolean activeCargo(@RequestParam Long userId) {
+    public boolean isLinked(@RequestParam Long userId) {
         return cargoService.existsByManagerId(userId);
     }
 }
