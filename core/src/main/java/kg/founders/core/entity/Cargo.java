@@ -42,4 +42,11 @@ public class Cargo extends BaseEntity {
     @OneToMany(mappedBy = "cargo", cascade = CascadeType.ALL, orphanRemoval = true)
     List<CargoTruck> cargoTrucks;
     Long managerId;
+
+    public Cargo(Long id) {
+        this.id = id;
+    }
+
+    public Cargo() {
+    }
 }

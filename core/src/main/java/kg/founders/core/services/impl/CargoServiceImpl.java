@@ -1,7 +1,6 @@
 package kg.founders.core.services.impl;
 
 import kg.founders.core.converter.CargoConverter;
-import kg.founders.core.converter.ClientConverter;
 import kg.founders.core.entity.Cargo;
 import kg.founders.core.entity.Client;
 import kg.founders.core.enums.CargoStatus;
@@ -28,7 +27,6 @@ public class CargoServiceImpl implements CargoService {
     CargoRepo repo;
     CargoConverter cargoConverter;
     ClientService clientService;
-    ClientConverter clientConverter;
 
     // Получение списка всех грузов
     @Override
@@ -42,7 +40,7 @@ public class CargoServiceImpl implements CargoService {
     public List<CargoModel> findALlByManagerId(Long id) {
         return repo.findAllByManagerId(id)
                 .stream()
-                .map(converter::convertFromEntity)
+                .map(cargoConverter::convertFromEntity)
                 .collect(Collectors.toList());
     }
 
@@ -52,7 +50,7 @@ public class CargoServiceImpl implements CargoService {
         Cargo cargo = cargoConverter.convertFromModel(cargoModel);
         Client client = clientService.getClientById(cargoModel.getClient().getId());
 //        if (client != null) {
-            cargo.setClient(client);
+        cargo.setClient(client);
 //        } else {
 //            client = new Client();
 //            client.setClientCode(cargoModel.getClient().getClientCode());

@@ -26,7 +26,8 @@ public enum PermissionType implements GrantedAuthority {
     TRUCK("Фуры", ScreenType.GENERAL, "truck", "mdi-truck"),
     WAREHOUSE("Склады", ScreenType.GENERAL, "warehouse", "mdi-store"),
     PAYMENT("Платежи", ScreenType.GENERAL, "payment", "mdi-cash-multiple"),
-    CARGO_TRUCK("Привязка грузов к фурам", ScreenType.GENERAL, "cargo-truck", "mdi-package-variant");
+    CARGO_TRUCK("Привязка грузов к фурам", ScreenType.GENERAL, "cargo-truck", "mdi-package-variant"),
+    PRICE("Цены", ScreenType.GENERAL, "price", "mdi-currency-usd");
 
     String description;
     ScreenType screenType;
