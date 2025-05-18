@@ -1,12 +1,11 @@
 spring:
-  profiles.active: ${ACTIVE_PROFILE:test}
+  profiles.active: ${ACTIVE_PROFILE:prod}
   web:
     encoding:
       charset: UTF-8
   cache.type: redis
   jpa:
     open-in-view: false
-    database: default
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect

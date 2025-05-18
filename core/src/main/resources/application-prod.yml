@@ -1,7 +1,36 @@
 spring:
-  profiles: prod
   datasource:
-    url: ${CREDIT_DB_URL}
-    username: ${CREDIT_DB_USERNAME}
-    password: ${CREDIT_DB_PASSWORD}
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 12000
+      idle-timeout: 30000
+      max-lifetime: 60000
+      maximum-pool-size: 15
+      pool-name: LogisticCRM-HikariPool
+      data-source-properties:
+        cache-prep-stmts: true
+        prep-stmt-cache-size: 128
+        prep-stmt-cache-sql-limit: 1024
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      format_sql: true
+    show-sql: false
+
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+
+  file:
+    path: ${FILES_PATH_NAME:files}
+    algorithm: SHA3-256
+
+server:
+  port: ${PORT:8080}
