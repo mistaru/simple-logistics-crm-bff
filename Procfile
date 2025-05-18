@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar bff/target/bff-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -jar bff/target/bff.jar
