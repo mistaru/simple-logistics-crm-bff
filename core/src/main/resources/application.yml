@@ -1,5 +1,7 @@
 spring:
   profiles.active: ${ACTIVE_PROFILE:prod}
+  main:
+    allow-bean-definition-overriding: true
   web:
     encoding:
       charset: UTF-8
