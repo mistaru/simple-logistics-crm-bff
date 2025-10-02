@@ -68,7 +68,7 @@ public class Truck extends BaseEntity {
     @Column(nullable = false, name = "service_fee")
     double serviceFee;
 
-    @OneToMany(mappedBy = "truck", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "truck")
     List<CargoTruck> cargoTrucks;
 
 }

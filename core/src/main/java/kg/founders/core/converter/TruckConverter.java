@@ -95,4 +95,50 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         return truck;
     }
 
+    public void updateTruckFromModel(TruckModel truckModel, Truck truck) {
+        truck.setRegistrationCountry(
+                truckModel.getRegistrationCountry() != null ? truckModel.getRegistrationCountry() : truck.getRegistrationCountry()
+        );
+        truck.setVolumeTotalM3(
+                truckModel.getVolumeTotalM3() != null ? truckModel.getVolumeTotalM3() : truck.getVolumeTotalM3()
+        );
+        truck.setVolumeOccupiedM3(
+                truckModel.getVolumeOccupiedM3() != null ? truckModel.getVolumeOccupiedM3() : truck.getVolumeOccupiedM3()
+        );
+        truck.setVolumeAvailableM3(
+                truckModel.getVolumeAvailableM3() != null ? truckModel.getVolumeTotalM3() - truckModel.getVolumeOccupiedM3() : truck.getVolumeTotalM3() - truck.getVolumeOccupiedM3()
+        );
+        truck.setDepartureWarehouse(
+                truckModel.getDepartureWarehouse() != null ? truckModel.getDepartureWarehouse() : truck.getDepartureWarehouse()
+        );
+        truck.setArrivalWarehouse(
+                truckModel.getArrivalWarehouse() != null ? truckModel.getArrivalWarehouse() : truck.getArrivalWarehouse()
+        );
+        truck.setDriverFullname(
+                truckModel.getDriverFullname() != null ? truckModel.getDriverFullname() : truck.getDriverFullname()
+        );
+        truck.setDriverPhone(
+                truckModel.getDriverPhone() != null ? truckModel.getDriverPhone() : truck.getDriverPhone()
+        );
+        truck.setDepartureDatePlanned(
+                truckModel.getDepartureDatePlanned() != null ? truckModel.getDepartureDatePlanned() : truck.getDepartureDatePlanned()
+        );
+        truck.setDepartureDateActual(
+                truckModel.getDepartureDateActual() != null ? truckModel.getDepartureDateActual() : truck.getDepartureDateActual()
+        );
+        truck.setArrivalDatePlanned(
+                truckModel.getArrivalDatePlanned() != null ? truckModel.getArrivalDatePlanned() : truck.getArrivalDatePlanned()
+        );
+        truck.setArrivalDateActual(
+                truckModel.getArrivalDateActual() != null ? truckModel.getArrivalDateActual() : truck.getArrivalDateActual()
+        );
+        truck.setAdditionalInformation(
+                truckModel.getAdditionalInformation() != null ? truckModel.getAdditionalInformation() : truck.getAdditionalInformation()
+        );
+        truck.setServiceFee(
+                truckModel.getServiceFee() != null ? truckModel.getServiceFee() : truck.getServiceFee()
+        );
+
+    }
+
 }

@@ -4,6 +4,7 @@ import kg.founders.core.converter.TruckConverter;
 import kg.founders.core.entity.Truck;
 import kg.founders.core.model.TruckModel;
 import kg.founders.core.repo.TruckRepository;
+import kg.founders.core.services.CargoTruckService;
 import kg.founders.core.services.TruckService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,6 +24,7 @@ public class TruckServiceImpl implements TruckService {
 
     TruckRepository truckRepository;
     TruckConverter truckConverter;
+    CargoTruckService cargoTruckService;
 
     @Override
     public List<TruckModel> getAll() {
@@ -45,19 +47,34 @@ public class TruckServiceImpl implements TruckService {
 
     @Override
     public TruckModel update(TruckModel truckModel) {
-        Optional<Truck> oldTruck = truckRepository.findById(truckModel.getId());
-        Truck newTruck = truckConverter.convertTruckModelToTruck(truckModel);
-        newTruck.setId(oldTruck.get().getId());
-        truckRepository.save(newTruck);
+//        Optional<Truck> oldTruck = truckRepository.findById(truckModel.getId());
+//        Truck newTruck = truckConverter.convertTruckModelToTruck(truckModel);
+//        newTruck.setId(oldTruck.get().getId());
+//        truckRepository.save(newTruck);
+//
+//        return truckConverter.convertTruckToTruckModel(newTruck);
+        Truck existingTruck = truckRepository.findById(truckModel.getId())
+                .orElseThrow(() -> new RuntimeException("Truck not found"));
 
-        return truckConverter.convertTruckToTruckModel(newTruck);
+        truckConverter.updateTruckFromModel(truckModel, existingTruck);
+
+        Truck savedTruck = truckRepository.save(existingTruck);
+        return truckConverter.convertTruckToTruckModel(savedTruck);
+
     }
 
     @Override
     public void softDelete(int id) {
-        Optional<Truck> truck = truckRepository.findById((long) id);
+        Optional<Truck> truck = truckRepository.findWithCargoTrucksById((long) id);
         if (truck.isPresent()) {
-            truck.get().markDeleted();
+            Truck truckToDelete = truck.get();
+            truckToDelete.getCargoTrucks()
+                .forEach(
+                        cargoTruck -> {
+                            cargoTruckService.unassignCargoFromTruck(cargoTruck.getCargo().getId(), truckToDelete.getId());
+                        }
+                );
+            truckToDelete.markDeleted();
             truckRepository.save(truck.get());
         }
     }
