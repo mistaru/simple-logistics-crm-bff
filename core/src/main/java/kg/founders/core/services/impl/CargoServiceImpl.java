@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,6 +65,38 @@ public class CargoServiceImpl implements CargoService {
         cargo = repo.save(cargo);
         return cargoConverter.convertFromEntity(cargo);
     }
+
+    @Override
+    @Transactional
+    public CargoModel updateCargo(CargoModel model) {
+
+        // 1. получить существующий Cargo
+        Cargo cargo = repo.findById(model.getId())
+                .orElseThrow(() -> new RuntimeException("Cargo not found: " + model.getId()));
+
+        // 2. обновляем только те поля, которые приходят
+        cargo.setWeight(model.getWeight());
+        cargo.setVolume(model.getVolume());
+        cargo.setQuantity(model.getQuantity());
+        cargo.setWarehouseArrivalDate(model.getWarehouseArrivalDate());
+        cargo.setShipmentDate(model.getShipmentDate());
+        cargo.setStatus(model.getStatus());
+        cargo.setDescription(model.getDescription());
+        cargo.setManagerId(model.getManagerId());
+
+        // 3. обновляем клиента
+        Client client = clientService.getClientById(model.getClient().getId());
+        cargo.setClient(client);
+
+        // ❗ 4. ВАЖНО: НИЧЕГО НЕ ДЕЛАТЬ С cargo.getCargoTrucks()
+        //    иначе Hibernate думает, что ты удалил список → orphan_remove → ошибка
+
+        // 5. сохранить
+        Cargo saved = repo.save(cargo);
+
+        return cargoConverter.convertFromEntity(saved);
+    }
+
 
     // Удаление груза по ID
     @Override

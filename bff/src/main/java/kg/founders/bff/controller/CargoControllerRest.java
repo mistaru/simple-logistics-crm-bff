@@ -52,7 +52,7 @@ public class CargoControllerRest {
     @PutMapping
     @ManualPermissionControl
     public CargoModel updateCargo(@RequestBody CargoModel cargoModel) {
-        return cargoService.saveCargo(cargoModel);
+        return cargoService.updateCargo(cargoModel);
     }
 
     @PostMapping("/reassign")
