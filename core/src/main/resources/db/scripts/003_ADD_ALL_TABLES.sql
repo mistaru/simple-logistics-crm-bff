@@ -44,11 +44,11 @@ VALUES (nextval('city_dict_SEQ'), '2025-03-22 19:01:32.098779', 9999, 'AUTH', '2
 
 
 INSERT INTO warehouse (id, cdt, created_by_id, created_by_table, mdt, modified_by_id, modified_by_table, rdt, address,
-                       name, phone_number, volume_m3, city_id, is_local)
+                       name, phone_number, volume_m3, weight_kg, city_id, is_local)
 VALUES (nextval('warehouse_SEQ'), '2025-03-22 19:21:56.074980', null, null, '2025-03-23 02:02:18.012848', 9999, 'AUTH',
         null,
-        'Проспект Чуй', 'Склад 1', '0312512321', 5000.00, (SELECT id FROM city_dict WHERE name = 'Бишкек'), true),
+        'Проспект Чуй', 'Склад 1', '0312512321', 5000.00, 10000.00, (SELECT id FROM city_dict WHERE name = 'Бишкек'), true),
 
        (nextval('warehouse_SEQ'), '2025-03-22 19:44:01.457017', null, null, '2025-03-23 02:02:52.296628', 9999, 'AUTH',
         null,
-        'проспект Манаса', 'Склад 3', '0312432123', 16000.00, (SELECT id FROM city_dict WHERE name = 'Бишкек'), true);
+        'проспект Манаса', 'Склад 3', '0312432123', 16000.00, 25000.00, (SELECT id FROM city_dict WHERE name = 'Бишкек'), true);

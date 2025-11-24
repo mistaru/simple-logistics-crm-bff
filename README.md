@@ -13,7 +13,7 @@
 This is a Spring Boot application that serves as the backend for a frontend application. It utilizes Spring Boot 3.4.1, Java 21, and PostgreSQL for database management.
 
 ## Technology Stack
-- **Java**: Version 21
+- **Java**: Version 17
 - **Spring Boot**: Version 3.4.1
 - **PostgreSQL**: Used as the relational database management system
 - **Maven**: For dependency management and build automation

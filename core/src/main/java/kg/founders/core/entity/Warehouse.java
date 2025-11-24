@@ -43,6 +43,9 @@ public class Warehouse extends BaseEntity {
     @Column(name = "PHONE_NUMBER")
     String phoneNumber;
 
-    @Column(name = "VOLUME_M3", nullable = false)
-    BigDecimal volumeM3;
+    @Column(name = "VOLUME_M3", nullable = false, columnDefinition = "NUMERIC(19, 2) DEFAULT 0")
+    BigDecimal volumeM3; // maximum volume capacity in cubic meters
+
+    @Column(name = "WEIGHT_KG", nullable = false, columnDefinition = "NUMERIC(19, 2) DEFAULT 0")
+    BigDecimal weightKg; // maximum weight capacity in kilograms
 }

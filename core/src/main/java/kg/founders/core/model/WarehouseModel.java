@@ -19,6 +19,7 @@ public class WarehouseModel {
     String address;
     String phoneNumber;
     BigDecimal volumeM3;
+    BigDecimal weightKg;
     @JsonProperty("isLocal")
     boolean isLocal;
 }

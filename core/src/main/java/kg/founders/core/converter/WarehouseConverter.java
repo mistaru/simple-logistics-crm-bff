@@ -28,6 +28,7 @@ public class WarehouseConverter extends ModelConverter<WarehouseModel, Warehouse
         model.setAddress(entity.getAddress());
         model.setPhoneNumber(entity.getPhoneNumber());
         model.setVolumeM3(entity.getVolumeM3());
+        model.setWeightKg(entity.getWeightKg());
         return model;
     }
 
@@ -40,6 +41,7 @@ public class WarehouseConverter extends ModelConverter<WarehouseModel, Warehouse
         entity.setAddress(model.getAddress());
         entity.setPhoneNumber(model.getPhoneNumber());
         entity.setVolumeM3(model.getVolumeM3());
+        entity.setWeightKg(model.getWeightKg());
         return entity;
     }
 }
