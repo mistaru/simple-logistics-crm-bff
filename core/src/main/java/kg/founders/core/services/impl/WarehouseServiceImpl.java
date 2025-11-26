@@ -2,6 +2,7 @@ package kg.founders.core.services.impl;
 
 import kg.founders.core.converter.WarehouseConverter;
 import kg.founders.core.entity.Warehouse;
+import kg.founders.core.enums.CargoStatus;
 import kg.founders.core.model.WarehouseModel;
 import kg.founders.core.repo.WarehouseRepo;
 import kg.founders.core.services.WarehouseService;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
@@ -45,7 +45,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public List<WarehouseModel> getAll() {
-        return warehouseRepo.findAll().stream().map(warehouseConverter::convertFromEntity).collect(Collectors.toList());
-
+        return warehouseRepo.findAllWithOccupiedCapacity(CargoStatus.IN_WAREHOUSE_STATUSES)
+                .stream().map(warehouseConverter::convertFromEntity).toList();
     }
 }

@@ -4,12 +4,14 @@ import kg.founders.core.entity.dictionaries.CityDict;
 import kg.founders.core.util.SqlTable;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +19,7 @@ import java.math.BigDecimal;
 @Table(name = Warehouse.TABLE_NAME)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
 public class Warehouse extends BaseEntity {
     @SqlTable
     public static final String TABLE_NAME = "WAREHOUSE";
@@ -48,4 +51,27 @@ public class Warehouse extends BaseEntity {
 
     @Column(name = "WEIGHT_KG", nullable = false, columnDefinition = "NUMERIC(19, 2) DEFAULT 0")
     BigDecimal weightKg; // maximum weight capacity in kilograms
+
+    @OneToMany(mappedBy = "warehouseId", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<CargoWarehouse> cargoWarehouses;
+
+    @Transient
+    Double occupiedVolume;
+
+    @Transient
+    Double occupiedWeight;
+
+    public Warehouse(Long id, String name, boolean isLocal, CityDict city, String address, String phoneNumber,
+                          BigDecimal volumeM3, BigDecimal weightKg, Double occupiedVolume, Double occupiedWeight) {
+        this.id = id;
+        this.name = name;
+        this.isLocal = isLocal;
+        this.city = city;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.volumeM3 = volumeM3;
+        this.weightKg = weightKg;
+        this.occupiedVolume = occupiedVolume;
+        this.occupiedWeight = occupiedWeight;
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -30,5 +31,7 @@ public enum CargoStatus {
                 .map(status -> new EnumModel(status.name(), status.getDescription()))
                 .collect(Collectors.toList());
     }
+
+    public static Set<CargoStatus> IN_WAREHOUSE_STATUSES = Set.of(CargoStatus.AT_DESTINATION_WAREHOUSE, CargoStatus.AT_LOCAL_WAREHOUSE);
 
 }

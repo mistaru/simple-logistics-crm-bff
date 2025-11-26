@@ -29,6 +29,8 @@ public class WarehouseConverter extends ModelConverter<WarehouseModel, Warehouse
         model.setPhoneNumber(entity.getPhoneNumber());
         model.setVolumeM3(entity.getVolumeM3());
         model.setWeightKg(entity.getWeightKg());
+        model.setOccupiedVolume(entity.getOccupiedVolume());
+        model.setOccupiedWeight(entity.getOccupiedWeight());
         return model;
     }
 
