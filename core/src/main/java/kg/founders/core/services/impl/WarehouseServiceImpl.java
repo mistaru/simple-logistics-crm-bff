@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 import static lombok.AccessLevel.PACKAGE;
@@ -38,9 +39,18 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public WarehouseModel update(WarehouseModel warehouseModel) {
-        Warehouse warehouse = warehouseConverter.convertFromModel(warehouseModel);
-        warehouseRepo.save(warehouse);
-        return warehouseConverter.convertFromEntity(warehouse);
+        Warehouse existingWarehouse = warehouseRepo.findById(warehouseModel.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Warehouse not found with id: " + warehouseModel.getId()));
+
+        existingWarehouse.setName(warehouseModel.getName());
+        existingWarehouse.setLocal(warehouseModel.isLocal());
+        existingWarehouse.setAddress(warehouseModel.getAddress());
+        existingWarehouse.setPhoneNumber(warehouseModel.getPhoneNumber());
+        existingWarehouse.setVolumeM3(warehouseModel.getVolumeM3());
+        existingWarehouse.setWeightKg(warehouseModel.getWeightKg());
+
+        Warehouse updatedWarehouse = warehouseRepo.save(existingWarehouse);
+        return warehouseConverter.convertFromEntity(updatedWarehouse);
     }
 
     @Override
