@@ -31,6 +31,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientModel create(ClientModel clientModel) throws Exception {
+        if (clientModel.getEmail() == null || clientModel.getEmail().isEmpty()) {clientModel.setEmail(clientModel.getPhoneNumber() + "@not-email.com");}
         Client client = clientConverter.convertFromModel(clientModel);
         clientRepo.save(client);
         return clientConverter.convertFromEntity(client);

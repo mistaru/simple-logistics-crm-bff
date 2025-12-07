@@ -37,7 +37,7 @@ public class Client extends BaseEntity {
     @Column(name = "WHATSAPP_NUMBER")
     String whatsappNumber;
 
-    @Column(name = "EMAIL", unique = true)
+    @Column(name = "EMAIL")
     String email;
 
     @Column(name = "ADDITIONAL_INFO")
