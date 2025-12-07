@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -20,7 +21,9 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
     }
 
     public TruckModel convertTruckToTruckModel(Truck truck) {
+
         if (truck == null) return null;
+
         TruckModel truckModel = new TruckModel();
         truckModel.setId(truck.getId());
         truckModel.setRegistrationCountry(truck.getRegistrationCountry());
@@ -36,7 +39,13 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         truckModel.setArrivalDatePlanned(truck.getArrivalDatePlanned());
         truckModel.setArrivalDateActual(truck.getArrivalDateActual());
         truckModel.setAdditionalInformation(truck.getAdditionalInformation());
+        truckModel.setCarrier(truck.getCarrier());
         truckModel.setServiceFee(truck.getServiceFee());
+        truckModel.setCustomsFee(truck.getCustomsFee());
+        truckModel.setExpenses(truck.getExpenses());
+        truckModel.setAdditionalExpenses(truck.getAdditionalExpenses());
+        truckModel.setTotalAmount(truck.getTotalAmount());
+
         return truckModel;
     }
     
@@ -89,7 +98,25 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         );
 
         truck.setServiceFee(
-                truckModel.getServiceFee() != null ? truckModel.getServiceFee() : 0.0
+                truckModel.getServiceFee() != null ? truckModel.getServiceFee() : BigDecimal.ZERO
+        );
+
+        if (truckModel.getCarrier() != null) truck.setCarrier(truckModel.getCarrier());
+
+        truck.setCustomsFee(
+                truckModel.getCustomsFee() != null ? truckModel.getCustomsFee() : BigDecimal.ZERO
+        );
+
+        truck.setExpenses(
+                truckModel.getExpenses() != null ? truckModel.getExpenses() : BigDecimal.ZERO
+        );
+
+        truck.setAdditionalExpenses(
+          truckModel.getAdditionalExpenses() != null ? truckModel.getAdditionalExpenses() : BigDecimal.ZERO
+        );
+
+        truck.setTotalAmount(
+                truckModel.getTotalAmount() != null ? truckModel.getTotalAmount() : BigDecimal.ZERO
         );
 
         return truck;
@@ -137,6 +164,26 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         );
         truck.setServiceFee(
                 truckModel.getServiceFee() != null ? truckModel.getServiceFee() : truck.getServiceFee()
+        );
+
+        truck.setCarrier(
+                truckModel.getCarrier() != null ? truckModel.getCarrier() : truck.getCarrier()
+        );
+
+        truck.setCustomsFee(
+                truckModel.getCustomsFee() != null ? truckModel.getCustomsFee() : truck.getCustomsFee()
+        );
+
+        truck.setExpenses(
+                truckModel.getExpenses() != null ? truckModel.getExpenses() : truck.getExpenses()
+        );
+
+        truck.setAdditionalExpenses(
+                truckModel.getAdditionalExpenses() != null ? truckModel.getAdditionalExpenses() :truck.getAdditionalExpenses()
+        );
+
+        truck.setTotalAmount(
+                truckModel.getTotalAmount() != null ? truckModel.getTotalAmount() : truck.getTotalAmount()
         );
 
     }

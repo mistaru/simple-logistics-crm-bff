@@ -3,6 +3,7 @@ package kg.founders.core.model;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Getter
@@ -26,6 +27,11 @@ public class TruckModel {
     Timestamp arrivalDatePlanned;
     Timestamp arrivalDateActual;
     String additionalInformation;
-    Double serviceFee;
+    String carrier;
+    BigDecimal  serviceFee;
+    BigDecimal customsFee;
+    BigDecimal expenses;
+    BigDecimal additionalExpenses;
+    BigDecimal totalAmount;
 
 }
