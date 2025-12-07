@@ -7,8 +7,10 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -62,13 +64,47 @@ public class Truck extends BaseEntity {
     @Column(nullable = false, name = "arrival_date_actual")
     Timestamp arrivalDateActual;
 
+    @Column
+    String carrier;
+
+    @Column(nullable = false, name = "service_fee")
+    BigDecimal serviceFee; // TODO это поле нужно?
+
+    @Column(name = "customs_fee")
+    BigDecimal customsFee;
+
+    @Column
+    BigDecimal expenses;
+
+    @Column(name = "additional_expenses")
+    BigDecimal additionalExpenses;
+
+    @Column(name = "total_amount")
+    BigDecimal totalAmount;
+
     @Column(name = "additional_information")
     String additionalInformation;
 
-    @Column(nullable = false, name = "service_fee")
-    double serviceFee;
+    // Перевозчик, Стоимость таможни, Дополнительные расходы, Расходы, Сумма
 
     @OneToMany(mappedBy = "truck")
     List<CargoTruck> cargoTrucks;
+
+    /**
+     * This method is automatically called by JPA before a new Truck entity is first saved (persisted)
+     * and before an existing one is updated.
+     */
+    @PrePersist
+    @PreUpdate
+    public void calculateTotalAmount() {
+        BigDecimal calculatedTotal = BigDecimal.ZERO;
+
+        calculatedTotal = calculatedTotal.add(Optional.ofNullable(this.serviceFee).orElse(BigDecimal.ZERO)); // TODO это поле нужно?
+        calculatedTotal = calculatedTotal.add(Optional.ofNullable(this.customsFee).orElse(BigDecimal.ZERO));
+        calculatedTotal = calculatedTotal.add(Optional.ofNullable(this.expenses).orElse(BigDecimal.ZERO));
+        calculatedTotal = calculatedTotal.add(Optional.ofNullable(this.additionalExpenses).orElse(BigDecimal.ZERO));
+
+        this.totalAmount = calculatedTotal;
+    }
 
 }
