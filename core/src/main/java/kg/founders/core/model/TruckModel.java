@@ -27,8 +27,7 @@ public class TruckModel {
     Timestamp arrivalDatePlanned;
     Timestamp arrivalDateActual;
     String additionalInformation;
-    String carrierName;
-    Long carrierId;
+    CarrierModel carrierModel;
     BigDecimal  serviceFee;
     BigDecimal customsFee;
     BigDecimal expenses;

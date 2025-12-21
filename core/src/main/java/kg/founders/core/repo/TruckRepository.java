@@ -26,10 +26,10 @@ public interface TruckRepository extends JpaRepository<Truck, Long> {
      * @param carrierId The ID of the carrier.
      * @return The sum of service fees, or BigDecimal.ZERO if the carrier has no trucks.
      */
-    @Query("SELECT COALESCE(SUM(t.serviceFee), 0) FROM Truck t WHERE t.carrier_id = :carrierId")
+    @Query("SELECT COALESCE(SUM(t.serviceFee), 0) FROM Truck t WHERE t.carrier.id = :carrierId")
     BigDecimal calculateServiceFeeForCarrier(@Param("carrierId") Long carrierId);
 
-    @Query("SELECT t.carrier.id as carrierId, SUM(t.serviceFee) as balance FROM Truck t WHERE t.carrier.id IN :carrierIds GROUP BY t.carrier.id")
+    @Query("SELECT t.carrier.id as carrierId, COALESCE(SUM(t.serviceFee), 0) as balance FROM Truck t WHERE t.carrier.id IN :carrierIds GROUP BY t.carrier.id")
     List<CarrierBalance> sumServiceFeeByCarrierIds(@Param("carrierIds") List<Long> carrierIds);
 
     default Map<Long, BigDecimal> getBalancesForCarriers(List<Long> carrierIds) {
