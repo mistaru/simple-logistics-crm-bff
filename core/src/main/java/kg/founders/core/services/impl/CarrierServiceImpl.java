@@ -9,6 +9,7 @@ import kg.founders.core.services.CarrierService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,10 +30,10 @@ public class CarrierServiceImpl implements CarrierService {
     private final TruckRepository truckRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<CarrierModel> getAll() {
 
-        List<Carrier> carriers = carrierRepository.findAll().stream()
-                .filter(carrier -> carrier.getRdt() == null).collect(Collectors.toList());
+        List<Carrier> carriers = carrierRepository.findAllWithTrucks();
 
         List<Long> carrierIds = carriers.stream().map(Carrier::getId).collect(Collectors.toUnmodifiableList());
 
@@ -50,8 +51,9 @@ public class CarrierServiceImpl implements CarrierService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CarrierModel getById(Long id) {
-        Carrier carrier = carrierRepository.findById(id).orElse(null);
+        Carrier carrier = carrierRepository.findWithTrucksById(id).orElse(null);
         if (carrier == null) {
             return null;
         }
@@ -61,6 +63,7 @@ public class CarrierServiceImpl implements CarrierService {
     }
 
     @Override
+    @Transactional
     public CarrierModel save(CarrierModel carrierModel) {
         Carrier carrier = carrierConverter.convertToEntity(carrierModel);
         carrierRepository.save(carrier);
@@ -68,6 +71,7 @@ public class CarrierServiceImpl implements CarrierService {
     }
 
     @Override
+    @Transactional
     public CarrierModel update(CarrierModel carrierModel) {
         Carrier existingCarrier = carrierRepository.findById(carrierModel.getId())
                 .orElseThrow(() -> new RuntimeException("Carrier not found"));
@@ -80,6 +84,7 @@ public class CarrierServiceImpl implements CarrierService {
     }
 
     @Override
+    @Transactional
     public void softDelete(Long id) {
         Optional<Carrier> carrier = carrierRepository.findById(id);
 

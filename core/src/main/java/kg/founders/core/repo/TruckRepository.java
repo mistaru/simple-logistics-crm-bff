@@ -19,6 +19,14 @@ public interface TruckRepository extends JpaRepository<Truck, Long> {
     @EntityGraph(attributePaths = "cargoTrucks")
     Optional<Truck> findWithCargoTrucksById(Long id);
 
+    @EntityGraph(attributePaths = "carrier")
+    @Query("SELECT t FROM Truck t WHERE t.rdt IS NULL")
+    List<Truck> findAllWithCarrier();
+
+    @EntityGraph(attributePaths = "carrier")
+    @Query("SELECT t FROM Truck t WHERE t.id = :id AND t.rdt IS NULL")
+    Optional<Truck> findWithCarrierById(@Param("id") Long id);
+
     /**
      * Calculates the sum of 'serviceFee' for all trucks associated with a given carrier ID.
      * This represents the carrier's balance.

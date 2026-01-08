@@ -9,6 +9,7 @@ import kg.founders.core.services.TruckService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,18 +28,20 @@ public class TruckServiceImpl implements TruckService {
     CargoTruckService cargoTruckService;
 
     @Override
+    @Transactional(readOnly = true)
     public List<TruckModel> getAll() {
-        return truckRepository.findAll().stream()
-                .filter(truck -> truck.getRdt() == null)
+        return truckRepository.findAllWithCarrier().stream()
                 .map(truckConverter::convertTruckToTruckModel).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TruckModel getById(int id) {
-        return truckConverter.convertTruckToTruckModel(truckRepository.findById((long) id).orElse(null));
+        return truckConverter.convertTruckToTruckModel(truckRepository.findWithCarrierById((long) id).orElse(null));
     }
 
     @Override
+    @Transactional
     public TruckModel save(TruckModel truckModel) {
         Truck truck = truckConverter.convertTruckModelToTruck(truckModel);
         truckRepository.save(truck);
@@ -46,13 +49,8 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
+    @Transactional
     public TruckModel update(TruckModel truckModel) {
-//        Optional<Truck> oldTruck = truckRepository.findById(truckModel.getId());
-//        Truck newTruck = truckConverter.convertTruckModelToTruck(truckModel);
-//        newTruck.setId(oldTruck.get().getId());
-//        truckRepository.save(newTruck);
-//
-//        return truckConverter.convertTruckToTruckModel(newTruck);
         Truck existingTruck = truckRepository.findById(truckModel.getId())
                 .orElseThrow(() -> new RuntimeException("Truck not found"));
 
@@ -64,6 +62,7 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
+    @Transactional
     public void softDelete(int id) {
         Optional<Truck> truck = truckRepository.findWithCargoTrucksById((long) id);
         if (truck.isPresent()) {
@@ -80,4 +79,3 @@ public class TruckServiceImpl implements TruckService {
     }
 
 }
-

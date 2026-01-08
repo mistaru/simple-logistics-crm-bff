@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,5 +18,6 @@ public class CarrierModel {
     String email;
     String phoneNumber;
     BigDecimal balance;
+    List<TruckModel> trucks;
 
 }

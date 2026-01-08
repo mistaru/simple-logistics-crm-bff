@@ -41,7 +41,7 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         truckModel.setArrivalDatePlanned(truck.getArrivalDatePlanned());
         truckModel.setArrivalDateActual(truck.getArrivalDateActual());
         truckModel.setAdditionalInformation(truck.getAdditionalInformation());
-        truckModel.setCarrierModel(carrierConverter.convertToModel(truck.getCarrier()));
+        truckModel.setCarrier(carrierConverter.convertToModelSimple(truck.getCarrier()));
         truckModel.setServiceFee(truck.getServiceFee());
         truckModel.setCustomsFee(truck.getCustomsFee());
         truckModel.setExpenses(truck.getExpenses());
@@ -103,7 +103,7 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
                 truckModel.getServiceFee() != null ? truckModel.getServiceFee() : BigDecimal.ZERO
         );
 
-        truck.setCarrier(carrierConverter.convertToEntity(truckModel.getCarrierModel()));
+        truck.setCarrier(carrierConverter.convertToEntity(truckModel.getCarrier()));
 
         truck.setCustomsFee(
                 truckModel.getCustomsFee() != null ? truckModel.getCustomsFee() : BigDecimal.ZERO
@@ -168,7 +168,7 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
                 truckModel.getServiceFee() != null ? truckModel.getServiceFee() : truck.getServiceFee()
         );
 
-        truck.setCarrier(carrierConverter.convertToEntity(truckModel.getCarrierModel()));
+        truck.setCarrier(carrierConverter.convertToEntity(truckModel.getCarrier()));
 
         truck.setCustomsFee(
                 truckModel.getCustomsFee() != null ? truckModel.getCustomsFee() : truck.getCustomsFee()
