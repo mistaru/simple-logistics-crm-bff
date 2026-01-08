@@ -64,8 +64,9 @@ public class Truck extends BaseEntity {
     @Column(nullable = false, name = "arrival_date_actual")
     Timestamp arrivalDateActual;
 
-    @Column
-    String carrier;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "carrier_id")
+    Carrier carrier;
 
     @Column(nullable = false, name = "service_fee")
     BigDecimal serviceFee; // TODO это поле нужно?
@@ -90,6 +91,7 @@ public class Truck extends BaseEntity {
     @OneToMany(mappedBy = "truck")
     List<CargoTruck> cargoTrucks;
 
+
     /**
      * This method is automatically called by JPA before a new Truck entity is first saved (persisted)
      * and before an existing one is updated.
@@ -99,7 +101,6 @@ public class Truck extends BaseEntity {
     public void calculateTotalAmount() {
         BigDecimal calculatedTotal = BigDecimal.ZERO;
 
-        calculatedTotal = calculatedTotal.add(Optional.ofNullable(this.serviceFee).orElse(BigDecimal.ZERO)); // TODO это поле нужно?
         calculatedTotal = calculatedTotal.add(Optional.ofNullable(this.customsFee).orElse(BigDecimal.ZERO));
         calculatedTotal = calculatedTotal.add(Optional.ofNullable(this.expenses).orElse(BigDecimal.ZERO));
         calculatedTotal = calculatedTotal.add(Optional.ofNullable(this.additionalExpenses).orElse(BigDecimal.ZERO));

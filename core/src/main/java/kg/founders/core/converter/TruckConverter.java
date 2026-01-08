@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class TruckConverter extends ModelConverter<TruckModel, Truck> {
 
+    private final CarrierConverter carrierConverter;
+
     @PostConstruct
     public void init() {
         this.fromEntity = this::convertTruckToTruckModel;
@@ -39,7 +41,7 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         truckModel.setArrivalDatePlanned(truck.getArrivalDatePlanned());
         truckModel.setArrivalDateActual(truck.getArrivalDateActual());
         truckModel.setAdditionalInformation(truck.getAdditionalInformation());
-        truckModel.setCarrier(truck.getCarrier());
+        truckModel.setCarrierModel(carrierConverter.convertToModel(truck.getCarrier()));
         truckModel.setServiceFee(truck.getServiceFee());
         truckModel.setCustomsFee(truck.getCustomsFee());
         truckModel.setExpenses(truck.getExpenses());
@@ -101,7 +103,7 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
                 truckModel.getServiceFee() != null ? truckModel.getServiceFee() : BigDecimal.ZERO
         );
 
-        if (truckModel.getCarrier() != null) truck.setCarrier(truckModel.getCarrier());
+        truck.setCarrier(carrierConverter.convertToEntity(truckModel.getCarrierModel()));
 
         truck.setCustomsFee(
                 truckModel.getCustomsFee() != null ? truckModel.getCustomsFee() : BigDecimal.ZERO
@@ -166,9 +168,7 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
                 truckModel.getServiceFee() != null ? truckModel.getServiceFee() : truck.getServiceFee()
         );
 
-        truck.setCarrier(
-                truckModel.getCarrier() != null ? truckModel.getCarrier() : truck.getCarrier()
-        );
+        truck.setCarrier(carrierConverter.convertToEntity(truckModel.getCarrierModel()));
 
         truck.setCustomsFee(
                 truckModel.getCustomsFee() != null ? truckModel.getCustomsFee() : truck.getCustomsFee()
