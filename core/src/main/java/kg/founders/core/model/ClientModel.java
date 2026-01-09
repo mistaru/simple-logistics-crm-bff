@@ -14,4 +14,5 @@ public class ClientModel {
     String whatsappNumber;
     String email;
     String additionalInfo;
+    Long managerId;
 }

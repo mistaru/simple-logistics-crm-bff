@@ -43,4 +43,5 @@ public class Client extends BaseEntity {
     @Column(name = "ADDITIONAL_INFO")
     String additionalInfo;
 
+    Long managerId;
 }

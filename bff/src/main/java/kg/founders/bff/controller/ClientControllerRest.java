@@ -5,6 +5,7 @@ import kg.founders.core.model.ClientModel;
 import kg.founders.core.services.ClientService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
+import kg.founders.core.util.PermissionHelper;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +26,17 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ClientControllerRest {
     ClientService clientService;
+    PermissionHelper permissionHelper;
+
 
     @GetMapping("/all")
     @ManualPermissionControl
     public List<ClientModel> getAll() {
-        return clientService.getAll();
+        if (permissionHelper.isAdmin()) {
+            return clientService.getAll();
+        } else {
+            return clientService.findALlByManagerId(permissionHelper.currentUserId());
+        }
     }
 
     @GetMapping
@@ -39,6 +46,7 @@ public class ClientControllerRest {
 
     @PostMapping
     public ClientModel create(@RequestBody ClientModel clientModel) throws Exception {
+        clientModel.setManagerId(permissionHelper.currentUserId());
         return clientService.create(clientModel);
     }
 

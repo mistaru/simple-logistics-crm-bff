@@ -33,6 +33,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientModel create(ClientModel clientModel) throws Exception {
         if (clientModel.getEmail() == null || clientModel.getEmail().isEmpty()) {clientModel.setEmail(clientModel.getPhoneNumber() + "@not-email.com");}
         Client client = clientConverter.convertFromModel(clientModel);
+        client.setManagerId(clientModel.getManagerId());
         clientRepo.save(client);
         return clientConverter.convertFromEntity(client);
     }
@@ -56,13 +57,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client findByClientCode(String clientCode) {
-        return clientRepo.findByClientCode(clientCode);
-    }
-
-    @Override
     public Client getClientById(Long id) {
         return clientRepo.findById(id).orElseThrow();
+    }
 
+    public List<ClientModel> findALlByManagerId(Long userId) {
+        return clientRepo.findAllByManagerId(userId)
+                .stream()
+                .map(clientConverter::convertFromEntity)
+                .collect(Collectors.toList());
     }
 }

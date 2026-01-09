@@ -19,8 +19,7 @@ public interface ClientService {
 
     ClientModel save(ClientModel model);
 
-    Client findByClientCode(String clientCode);
-
     Client getClientById(Long id);
 
+    List<ClientModel> findALlByManagerId(Long userId);
 }
