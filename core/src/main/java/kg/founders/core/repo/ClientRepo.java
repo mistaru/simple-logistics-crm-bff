@@ -8,7 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ClientRepo extends JpaRepository<Client, Long> {
-    Client findByClientCode(String clientCode);
-
     List<Client> findAllByManagerId(Long managerId);
 }

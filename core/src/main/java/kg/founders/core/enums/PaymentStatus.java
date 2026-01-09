@@ -17,9 +17,8 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum PaymentStatus {
 
-    NEW("Новый"),
-    APPROVED("Одобрен"),
-    CANCELED("Отменён");
+    CLIENT_PAYS_FOR_CARGO("Клиент оплачивает за груз"),
+    COMPANY_PAYS_CARRIERS("Компания оплачивает перевозчикам");
 
     String value;
 

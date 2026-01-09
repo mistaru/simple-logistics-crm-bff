@@ -78,4 +78,9 @@ public class TruckServiceImpl implements TruckService {
         }
     }
 
+    @Override
+    public List<Long> getTruckIds() {
+        return truckRepository.findIdByRdtIsNull();
+    }
+
 }

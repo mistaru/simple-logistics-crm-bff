@@ -83,6 +83,12 @@ public class CargoControllerRest {
     public boolean isLinked(@RequestParam Long userId) {
         return cargoService.existsByManagerId(userId);
     }
+
+    @GetMapping("/ids")
+    @ManualPermissionControl
+    public List<Long> getCargoIds() {
+        return cargoService.getCargoIds();
+    }
 }
 
 

@@ -1,5 +1,6 @@
 package kg.founders.bff.controller;
 
+import kg.founders.core.enums.PaymentStatus;
 import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.exceptions.ForbiddenException;
 import kg.founders.core.model.CargoPaymentModel;
@@ -26,7 +27,6 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PACKAGE)
 @HasPermission(value = PermissionType.PERMISSION)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-@CrossOrigin(origins = "http://localhost:8080")
 public class PaymentControllerRest {
 
     PaymentService paymentService;
@@ -46,14 +46,27 @@ public class PaymentControllerRest {
         return ResponseEntity.ok(paymentModel);
     }
 
-    @PostMapping
-    public PaymentModel create(@RequestBody PaymentModel paymentModel) {
+    @PostMapping("/cargo")
+    public PaymentModel createCargo(@RequestBody PaymentModel paymentModel) {
         paymentModel.setManagerId(permissionHelper.currentUserId());
+        paymentModel.setStatus(PaymentStatus.CLIENT_PAYS_FOR_CARGO);
         return paymentService.save(paymentModel);
     }
 
-    @PutMapping
+    @PostMapping("/truck")
+    public PaymentModel createTruck(@RequestBody PaymentModel paymentModel) {
+        paymentModel.setManagerId(permissionHelper.currentUserId());
+        paymentModel.setStatus(PaymentStatus.COMPANY_PAYS_CARRIERS);
+        return paymentService.save(paymentModel);
+    }
+
+    @PutMapping("/cargo")
     public PaymentModel update(@RequestBody PaymentModel paymentModel) {
+        return paymentService.update(paymentModel);
+    }
+
+    @PutMapping("/truck")
+    public PaymentModel updateTruck(@RequestBody PaymentModel paymentModel) {
         return paymentService.update(paymentModel);
     }
 

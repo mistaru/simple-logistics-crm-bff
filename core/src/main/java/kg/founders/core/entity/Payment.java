@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Getter
@@ -32,11 +33,13 @@ public class Payment extends BaseEntity {
     @ManyToOne
     Cargo cargo;
 
-    Timestamp planned;
-
     Timestamp actual;
 
     String comment;
 
     Long managerId;
+
+    Long payer_id;
+
+    BigDecimal amount;
 }

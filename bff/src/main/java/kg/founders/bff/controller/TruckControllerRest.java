@@ -4,6 +4,7 @@ import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.model.TruckModel;
 import kg.founders.core.services.TruckService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
+import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,12 @@ public class TruckControllerRest {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         truckService.softDelete(id);
+    }
+
+    @GetMapping("/ids")
+    @ManualPermissionControl
+    public List<Long> getTruckIds() {
+        return truckService.getTruckIds();
     }
 
 }

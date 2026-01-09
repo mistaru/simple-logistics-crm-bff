@@ -54,6 +54,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentModel save(PaymentModel paymentModel) {
         Payment payment = converter.convertPaymentModelToPayment(paymentModel);
+        payment.setPayer_id(paymentModel.getPayer_id());
         repo.save(payment);
         return converter.convertPaymentToPaymentModel(payment);
     }
@@ -64,6 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
         Payment newPayment = converter.convertPaymentModelToPayment(paymentModel);
         newPayment.setId(oldPayment.get().getId());
         newPayment.setMdt(new Timestamp(System.currentTimeMillis()));
+        newPayment.setPayer_id(paymentModel.getPayer_id());
         repo.save(newPayment);
 
         return converter.convertPaymentToPaymentModel(newPayment);

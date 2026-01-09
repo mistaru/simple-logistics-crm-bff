@@ -15,4 +15,6 @@ public interface TruckService {
     TruckModel update(TruckModel truck);
 
     void softDelete(int id);
+
+    List<Long> getTruckIds();
 }

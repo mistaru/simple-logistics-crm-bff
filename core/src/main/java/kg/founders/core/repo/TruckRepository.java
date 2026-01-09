@@ -48,6 +48,9 @@ public interface TruckRepository extends JpaRepository<Truck, Long> {
                 .collect(Collectors.toMap(CarrierBalance::getCarrierId, CarrierBalance::getBalance));
     }
 
+    @Query("select t.id from Truck t where t.rdt is null")
+    List<Long> findIdByRdtIsNull();
+
     interface CarrierBalance {
         Long getCarrierId();
         BigDecimal getBalance();

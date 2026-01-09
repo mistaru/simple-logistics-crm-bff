@@ -22,11 +22,10 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         PaymentModel paymentModel = new PaymentModel();
         paymentModel.setId(payment.getId());
         paymentModel.setStatus(payment.getStatus());
-        paymentModel.setCargo(payment.getCargo());
-        paymentModel.setPlanned(payment.getPlanned());
         paymentModel.setActual(payment.getActual());
         paymentModel.setComment(payment.getComment());
         paymentModel.setManagerId(payment.getManagerId());
+        paymentModel.setPayer_id(payment.getPayer_id());
         return paymentModel;
     }
 
@@ -34,9 +33,8 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         Payment payment = new Payment();
         payment.setId(paymentModel.getId());
         payment.setStatus(paymentModel.getStatus());
-        payment.setCargo(paymentModel.getCargo());
-        payment.setPlanned(paymentModel.getPlanned());
         payment.setActual(paymentModel.getActual());
+        payment.setPayer_id(paymentModel.getPayer_id());
         payment.setComment(paymentModel.getComment());
         payment.setManagerId(paymentModel.getManagerId());
         return payment;

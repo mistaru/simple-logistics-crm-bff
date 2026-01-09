@@ -133,4 +133,9 @@ public class CargoServiceImpl implements CargoService {
     public boolean existsByManagerId(Long userId) {
         return repo.existsByManagerId(userId);
     }
+
+    @Override
+    public List<Long> getCargoIds() {
+        return repo.findIdByRdtIsNull();
+    }
 }

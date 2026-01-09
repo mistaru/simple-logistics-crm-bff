@@ -23,4 +23,6 @@ public interface CargoService {
     void reassignAll(ReassignCargosRequest reassignCargosRequest);
 
     boolean existsByManagerId(Long userId);
+
+    List<Long> getCargoIds();
 }
