@@ -1,5 +1,7 @@
 package kg.founders.core.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import kg.founders.core.model.EnumModel;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,5 +33,20 @@ public enum PaymentStatus {
         return Arrays.stream(PaymentStatus.values())
                 .map(status -> new EnumModel(status.name(), status.toString()))
                 .collect(Collectors.toList());
+    }
+
+    @JsonCreator
+    public static PaymentStatus fromValue(String value) {
+        for (PaymentStatus s : values()) {
+            if (s.value.equalsIgnoreCase(value) || s.name().equalsIgnoreCase(value)) {
+                return s;
+            }
+        }
+        throw new IllegalArgumentException("Unknown payment status: " + value);
+    }
+
+    @JsonValue
+    public String getValue() {
+        return value;
     }
 }

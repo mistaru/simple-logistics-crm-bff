@@ -6,6 +6,7 @@ import kg.founders.core.entity.Payment;
 import kg.founders.core.enums.PaymentStatus;
 import kg.founders.core.model.CargoPaymentModel;
 import kg.founders.core.model.PaymentModel;
+import kg.founders.core.model.PaymentModelUpd;
 import kg.founders.core.repo.PaymentRepo;
 import kg.founders.core.services.CargoService;
 import kg.founders.core.services.PaymentService;
@@ -47,13 +48,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<PaymentModel> findALlByCargoIdAndPaymentStatus(Long cargoId, PaymentStatus status) {
-        return repo.findAllByCargoIdAndStatusAndRdtIsNull(cargoId, status)
-                .stream().map(converter::convertPaymentToPaymentModel)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<PaymentModel> findAllByCargoIdsAndPaymentStatus(List<Long> cargoIds, PaymentStatus paymentStatus) {
         return repo.findAllByCargoIdInAndStatusAndRdtIsNull(cargoIds, paymentStatus)
                 .stream().map(converter::convertPaymentToPaymentModel)
@@ -74,10 +68,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentModel update(PaymentModel paymentModel) {
+    public PaymentModel update(PaymentModelUpd paymentModel) {
         Optional<Payment> oldPayment = repo.findById(paymentModel.getId());
-        Payment newPayment = converter.convertPaymentModelToPayment(paymentModel);
+        Payment newPayment = converter.convertPaymentModelToPaymentUpd(paymentModel);
         newPayment.setId(oldPayment.get().getId());
+        newPayment.setStatus(PaymentStatus.fromValue(paymentModel.getStatus()));
         newPayment.setMdt(new Timestamp(System.currentTimeMillis()));
         newPayment.setPayer_id(paymentModel.getPayer_id());
         repo.save(newPayment);

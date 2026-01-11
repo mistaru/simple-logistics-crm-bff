@@ -12,12 +12,11 @@ import java.sql.Timestamp;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class PaymentModel {
+public class PaymentModelUpd {
     Long id;
-    PaymentStatus status;
     Timestamp actual;
+    String status;
     String comment;
-    String type;
     Long managerId;
     Long payer_id;
     BigDecimal amount;

@@ -5,6 +5,7 @@ import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.exceptions.ForbiddenException;
 import kg.founders.core.model.CargoPaymentModel;
 import kg.founders.core.model.PaymentModel;
+import kg.founders.core.model.PaymentModelUpd;
 import kg.founders.core.services.PaymentService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
@@ -60,13 +61,8 @@ public class PaymentControllerRest {
         return paymentService.save(paymentModel);
     }
 
-    @PutMapping("/cargo")
-    public PaymentModel update(@RequestBody PaymentModel paymentModel) {
-        return paymentService.update(paymentModel);
-    }
-
-    @PutMapping("/truck")
-    public PaymentModel updateTruck(@RequestBody PaymentModel paymentModel) {
+    @PutMapping
+    public PaymentModel update(@RequestBody PaymentModelUpd paymentModel) {
         return paymentService.update(paymentModel);
     }
 
@@ -88,5 +84,4 @@ public class PaymentControllerRest {
         paymentService.reassign(managerId, paymentId);
         return ResponseEntity.ok().build();
     }
-
 }
