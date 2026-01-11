@@ -1,5 +1,6 @@
 package kg.founders.core.entity;
 
+import kg.founders.core.enums.CargoStatus;
 import kg.founders.core.util.SqlTable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -82,6 +83,9 @@ public class Truck extends BaseEntity {
 
     @Column(name = "total_amount")
     BigDecimal totalAmount;
+
+    @Enumerated(EnumType.STRING)
+    CargoStatus status;
 
     @Column(name = "additional_information")
     String additionalInformation;

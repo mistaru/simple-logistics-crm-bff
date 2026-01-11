@@ -1,5 +1,5 @@
 spring:
-  profiles.active: ${ACTIVE_PROFILE:prod}
+  profiles.active: ${ACTIVE_PROFILE:test}
   web:
     encoding:
       charset: UTF-8

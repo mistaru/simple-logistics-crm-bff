@@ -2,6 +2,7 @@ package kg.founders.bff.controller;
 
 import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.model.CarrierModel;
+import kg.founders.core.model.CarrierProfileModel;
 import kg.founders.core.services.CarrierService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.HasPermissions;
@@ -40,8 +41,8 @@ public class CarrierControllerRest {
             @HasPermission(CARRIER),
             @HasPermission(TRUCK)
     })
-    public ResponseEntity<CarrierModel> getById(@PathVariable Long id) {
-        CarrierModel carrierModel = carrierService.getById(id);
+    public ResponseEntity<CarrierProfileModel> getById(@PathVariable Long id) {
+        CarrierProfileModel carrierModel = carrierService.getById(id);
         if (carrierModel == null)
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(carrierModel);

@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 @Component
 @RequiredArgsConstructor
 public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
+    private final CargoConverter cargoConverter;
 
     @PostConstruct
     public void init() {
@@ -29,6 +30,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         paymentModel.setPayer_id(payment.getPayer_id());
         paymentModel.setAmount(payment.getAmount());
         paymentModel.setType(payment.getStatus().name());
+        paymentModel.setCargo(cargoConverter.convertToModel(payment.getCargo()));
         return paymentModel;
     }
 
@@ -41,6 +43,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         payment.setComment(paymentModel.getComment());
         payment.setManagerId(paymentModel.getManagerId());
         payment.setAmount(paymentModel.getAmount());
+        payment.setCargo(cargoConverter.convertFromModel(paymentModel.getCargo()));
         return payment;
     }
 

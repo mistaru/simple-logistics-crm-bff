@@ -18,7 +18,7 @@ public class CargoConverter extends ModelConverter<CargoModel, Cargo> {
         this.fromModel = this::convertToEntity;
     }
 
-    private CargoModel convertToModel(Cargo entity) {
+    CargoModel convertToModel(Cargo entity) {
         if (entity == null) {
             return null;
         }
@@ -37,7 +37,7 @@ public class CargoConverter extends ModelConverter<CargoModel, Cargo> {
         return model;
     }
 
-    private Cargo convertToEntity(CargoModel model) {
+    Cargo convertToEntity(CargoModel model) {
         Cargo cargo = new Cargo();
         cargo.setId(model.getId());
         cargo.setWeight(model.getWeight());

@@ -20,5 +20,6 @@ public class PaymentModel {
     String type;
     Long managerId;
     Long payer_id;
+    CargoModel cargo;
     BigDecimal amount;
 }
