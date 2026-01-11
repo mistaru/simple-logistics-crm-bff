@@ -47,6 +47,7 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
         truckModel.setExpenses(truck.getExpenses());
         truckModel.setAdditionalExpenses(truck.getAdditionalExpenses());
         truckModel.setTotalAmount(truck.getTotalAmount());
+        truckModel.setCargoStatus(truck.getStatus());
 
         return truckModel;
     }
@@ -121,6 +122,8 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
                 truckModel.getTotalAmount() != null ? truckModel.getTotalAmount() : BigDecimal.ZERO
         );
 
+        truck.setStatus(truckModel.getCargoStatus());
+
         return truck;
     }
 
@@ -184,6 +187,9 @@ public class TruckConverter extends ModelConverter<TruckModel, Truck> {
 
         truck.setTotalAmount(
                 truckModel.getTotalAmount() != null ? truckModel.getTotalAmount() : truck.getTotalAmount()
+        );
+        truck.setStatus(
+                truckModel.getCargoStatus() != null ? truckModel.getCargoStatus() : truck.getStatus()
         );
 
     }

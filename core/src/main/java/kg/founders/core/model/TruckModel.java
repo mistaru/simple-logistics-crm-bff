@@ -1,5 +1,6 @@
 package kg.founders.core.model;
 
+import kg.founders.core.enums.CargoStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -33,5 +34,6 @@ public class TruckModel {
     BigDecimal expenses;
     BigDecimal additionalExpenses;
     BigDecimal totalAmount;
+    CargoStatus cargoStatus;
 
 }
