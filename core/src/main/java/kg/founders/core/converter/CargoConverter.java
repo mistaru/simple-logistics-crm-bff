@@ -33,6 +33,7 @@ public class CargoConverter extends ModelConverter<CargoModel, Cargo> {
         model.setStatus(entity.getStatus());
         model.setDescription(entity.getDescription());
         model.setManagerId(entity.getManagerId());
+        model.setPrice(entity.getPrice());
         return model;
     }
 
@@ -48,6 +49,7 @@ public class CargoConverter extends ModelConverter<CargoModel, Cargo> {
         cargo.setStatus(model.getStatus());
         cargo.setDescription(model.getDescription());
         cargo.setManagerId(model.getManagerId());
+        cargo.setPrice(model.getPrice());
         return cargo;
     }
 }

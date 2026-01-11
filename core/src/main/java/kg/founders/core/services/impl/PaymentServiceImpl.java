@@ -3,7 +3,7 @@ package kg.founders.core.services.impl;
 import kg.founders.core.converter.CargoModelToCargoPaymentModelConverter;
 import kg.founders.core.converter.PaymentConverter;
 import kg.founders.core.entity.Payment;
-import kg.founders.core.model.CargoModel;
+import kg.founders.core.enums.PaymentStatus;
 import kg.founders.core.model.CargoPaymentModel;
 import kg.founders.core.model.PaymentModel;
 import kg.founders.core.repo.PaymentRepo;
@@ -44,6 +44,20 @@ public class PaymentServiceImpl implements PaymentService {
         return repo.findAllByManagerId(managerId).stream()
                 .filter(payment -> payment.getRdt() == null)
                 .map(converter::convertPaymentToPaymentModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PaymentModel> findALlByCargoIdAndPaymentStatus(Long cargoId, PaymentStatus status) {
+        return repo.findAllByCargoIdAndStatusAndRdtIsNull(cargoId, status)
+                .stream().map(converter::convertPaymentToPaymentModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PaymentModel> findAllByCargoIdsAndPaymentStatus(List<Long> cargoIds, PaymentStatus paymentStatus) {
+        return repo.findAllByCargoIdInAndStatusAndRdtIsNull(cargoIds, paymentStatus)
+                .stream().map(converter::convertPaymentToPaymentModel)
+                .collect(Collectors.toList());
     }
 
     @Override

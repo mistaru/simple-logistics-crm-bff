@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public class Cargo extends BaseEntity {
     @OneToMany(mappedBy = "cargo", cascade = CascadeType.ALL, orphanRemoval = true)
     List<CargoTruck> cargoTrucks;
     Long managerId;
+
+    BigDecimal price = BigDecimal.ZERO;
 
     public Cargo(Long id) {
         this.id = id;

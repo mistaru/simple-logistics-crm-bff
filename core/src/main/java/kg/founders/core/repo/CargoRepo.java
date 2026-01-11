@@ -12,6 +12,8 @@ import java.util.List;
 public interface CargoRepo extends JpaRepository<Cargo, Long> {
     List<Cargo> findAllByRdtIsNullAndStatusNotIn(List<CargoStatus> statuses);
     List<Cargo> findAllByManagerId(Long managerId);
+
+    List<Cargo> findAllByClientIdAndRdtIsNull(Long clientId);
     boolean existsByManagerId(Long managerId);
 
     @Query("select t.id from Cargo t where t.rdt is null")

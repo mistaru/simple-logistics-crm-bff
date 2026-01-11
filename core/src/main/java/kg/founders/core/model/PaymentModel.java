@@ -4,6 +4,7 @@ import kg.founders.core.enums.PaymentStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Getter
@@ -18,4 +19,5 @@ public class PaymentModel {
     String comment;
     Long managerId;
     Long payer_id;
+    BigDecimal amount;
 }

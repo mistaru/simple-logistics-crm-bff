@@ -3,6 +3,7 @@ package kg.founders.core.services;
 import kg.founders.core.model.CargoModel;
 import kg.founders.core.model.ReassignCargosRequest;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CargoService {
@@ -17,6 +18,7 @@ public interface CargoService {
     List<CargoModel> getAllActive();
 
     List<CargoModel> findALlByManagerId(Long id);
+    List<CargoModel> findALlByClientId(Long id);
 
     void reassign(Long managerId, Long cargoId);
 
@@ -25,4 +27,6 @@ public interface CargoService {
     boolean existsByManagerId(Long userId);
 
     List<Long> getCargoIds();
+
+    CargoModel setPrice(BigDecimal price, Long cargoId);
 }

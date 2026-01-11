@@ -26,6 +26,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         paymentModel.setComment(payment.getComment());
         paymentModel.setManagerId(payment.getManagerId());
         paymentModel.setPayer_id(payment.getPayer_id());
+        paymentModel.setAmount(payment.getAmount());
         return paymentModel;
     }
 
@@ -37,6 +38,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         payment.setPayer_id(paymentModel.getPayer_id());
         payment.setComment(paymentModel.getComment());
         payment.setManagerId(paymentModel.getManagerId());
+        payment.setAmount(paymentModel.getAmount());
         return payment;
     }
 }

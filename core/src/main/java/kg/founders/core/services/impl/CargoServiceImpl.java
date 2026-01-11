@@ -13,7 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +42,14 @@ public class CargoServiceImpl implements CargoService {
     @Override
     public List<CargoModel> findALlByManagerId(Long id) {
         return repo.findAllByManagerId(id)
+                .stream()
+                .map(cargoConverter::convertFromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CargoModel> findALlByClientId(Long id) {
+        return repo.findAllByClientIdAndRdtIsNull(id)
                 .stream()
                 .map(cargoConverter::convertFromEntity)
                 .collect(Collectors.toList());
@@ -138,4 +148,30 @@ public class CargoServiceImpl implements CargoService {
     public List<Long> getCargoIds() {
         return repo.findIdByRdtIsNull();
     }
+
+    @Override
+    @Transactional
+    public CargoModel setPrice(BigDecimal price, Long cargoId) {
+
+        // 1. Валидация
+        if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Цена должна быть больше 0");
+        }
+        if (cargoId == null || cargoId <= 0) {
+            throw new IllegalArgumentException("Некорректный cargoId");
+        }
+
+        // 2. Получаем груз
+        Cargo cargo = repo.findById(cargoId)
+                .orElseThrow(() -> new EntityNotFoundException("Груз с id=" + cargoId + " не найден"));
+
+        // 3. Обновляем цену
+        cargo.setPrice(price);
+
+        // 4. Сохраняем
+        Cargo saved = repo.save(cargo);
+
+        // 5. Маппинг в модель
+        return cargoConverter.convertFromEntity(saved);    }
+
 }

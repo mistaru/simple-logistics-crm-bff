@@ -2,19 +2,19 @@ package kg.founders.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import kg.founders.core.enums.CargoStatus;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CargoModel {
+public class CargoProfileModel {
     Long id;
+
     double weight;
     double volume;
     int quantity;
@@ -23,9 +23,11 @@ public class CargoModel {
     Timestamp warehouseArrivalDate;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     Timestamp shipmentDate;
-    ClientModel client;
     CargoStatus status;
     String description;
     Long managerId;
-    BigDecimal price = BigDecimal.ZERO;
+
+    BigDecimal invoiceTotal;
+    BigDecimal paymentReceived;
+    BigDecimal balanceDue;
 }

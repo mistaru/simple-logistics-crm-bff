@@ -2,6 +2,8 @@ package kg.founders.bff.controller;
 
 import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.model.ClientModel;
+import kg.founders.core.model.ClientProfileModel;
+import kg.founders.core.services.ClientProfileService;
 import kg.founders.core.services.ClientService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
@@ -26,16 +28,17 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class ClientControllerRest {
     ClientService clientService;
+    ClientProfileService clientProfileService;
     PermissionHelper permissionHelper;
 
 
     @GetMapping("/all")
     @ManualPermissionControl
-    public List<ClientModel> getAll() {
+    public List<ClientProfileModel> getAll() {
         if (permissionHelper.isAdmin()) {
-            return clientService.getAll();
+            return clientProfileService.getAll();
         } else {
-            return clientService.findALlByManagerId(permissionHelper.currentUserId());
+            return clientProfileService.findALlByManagerId(permissionHelper.currentUserId());
         }
     }
 

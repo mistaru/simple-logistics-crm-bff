@@ -4,6 +4,7 @@ import kg.founders.core.enums.permission.PermissionType;
 import kg.founders.core.exceptions.ForbiddenException;
 import kg.founders.core.model.CargoModel;
 import kg.founders.core.model.ReassignCargosRequest;
+import kg.founders.core.model.SetCargoPriceRequest;
 import kg.founders.core.services.CargoService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
@@ -89,6 +90,15 @@ public class CargoControllerRest {
     public List<Long> getCargoIds() {
         return cargoService.getCargoIds();
     }
+
+
+    @PostMapping("/price")
+    @ManualPermissionControl
+    public CargoModel setPrice(@RequestBody SetCargoPriceRequest request) {
+        return cargoService.setPrice(request.getPrice(), request.getCargoId());
+    }
+
+
 }
 
 

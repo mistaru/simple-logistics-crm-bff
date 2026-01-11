@@ -1,5 +1,6 @@
 package kg.founders.core.services;
 
+import kg.founders.core.enums.PaymentStatus;
 import kg.founders.core.model.CargoPaymentModel;
 import kg.founders.core.model.PaymentModel;
 
@@ -9,6 +10,7 @@ public interface PaymentService {
     List<PaymentModel> getAll();
 
     List<PaymentModel> findAllByManagerId(Long aLong);
+    List<PaymentModel> findALlByCargoIdAndPaymentStatus(Long cargoId, PaymentStatus status);
 
     PaymentModel getById(Long id);
 
@@ -22,4 +24,6 @@ public interface PaymentService {
     List<CargoPaymentModel> getAllCargoPayments();
 
     void reassign(Long managerId, Long paymentId);
+
+    List<PaymentModel> findAllByCargoIdsAndPaymentStatus(List<Long> cargoIds, PaymentStatus paymentStatus);
 }
