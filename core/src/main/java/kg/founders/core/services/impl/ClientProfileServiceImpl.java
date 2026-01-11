@@ -143,6 +143,7 @@ public class ClientProfileServiceImpl implements ClientProfileService {
                 cargo.getStatus(),
                 cargo.getDescription(),
                 cargo.getManagerId(),
+                cargo.getPrice(),
                 invoiceTotal,
                 paymentReceived,
                 balanceDue

@@ -26,7 +26,7 @@ public class CargoProfileModel {
     CargoStatus status;
     String description;
     Long managerId;
-
+    BigDecimal price;
     BigDecimal invoiceTotal;
     BigDecimal paymentReceived;
     BigDecimal balanceDue;
