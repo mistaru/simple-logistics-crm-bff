@@ -34,6 +34,20 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         return paymentModel;
     }
 
+    public PaymentModel convertPaymentToPaymentModelCreate(Payment payment) {
+        if (payment == null) return null;
+        PaymentModel paymentModel = new PaymentModel();
+        paymentModel.setStatus(payment.getStatus());
+        paymentModel.setId(payment.getId());
+        paymentModel.setActual(payment.getActual());
+        paymentModel.setComment(payment.getComment());
+        paymentModel.setManagerId(payment.getManagerId());
+        paymentModel.setPayer_id(payment.getPayer_id());
+        paymentModel.setAmount(payment.getAmount());
+        paymentModel.setType(payment.getStatus().name());
+        return paymentModel;
+    }
+
     public Payment convertPaymentModelToPayment(PaymentModel paymentModel) {
         Payment payment = new Payment();
         payment.setId(paymentModel.getId());
@@ -52,6 +66,18 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         payment.setId(paymentModel.getId());
         payment.setActual(paymentModel.getActual());
         payment.setPayer_id(paymentModel.getPayer_id());
+        payment.setComment(paymentModel.getComment());
+        payment.setManagerId(paymentModel.getManagerId());
+        payment.setAmount(paymentModel.getAmount());
+        return payment;
+    }
+
+    public Payment convertPaymentModelToPaymentCreate(PaymentModel paymentModel) {
+        Payment payment = new Payment();
+        payment.setStatus(paymentModel.getStatus());
+        payment.setId(paymentModel.getId());
+        payment.setPayer_id(paymentModel.getPayer_id());
+        payment.setActual(paymentModel.getActual());
         payment.setComment(paymentModel.getComment());
         payment.setManagerId(paymentModel.getManagerId());
         payment.setAmount(paymentModel.getAmount());

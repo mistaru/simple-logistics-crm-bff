@@ -20,4 +20,7 @@ public interface CarrierRepository extends JpaRepository<Carrier, Long> {
     @EntityGraph(attributePaths = "trucks")
     @Query("SELECT c FROM Carrier c WHERE c.id = :id AND c.rdt IS NULL")
     Optional<Carrier> findWithTrucksById(@Param("id") Long id);
+
+    @Query("select t.id from Carrier t where t.rdt is null")
+    List<Long> findIdByRdtIsNull();
 }

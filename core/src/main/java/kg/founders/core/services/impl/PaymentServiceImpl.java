@@ -68,6 +68,14 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public PaymentModel create(PaymentModel paymentModel) {
+        Payment payment = converter.convertPaymentModelToPaymentCreate(paymentModel);
+        payment.setPayer_id(paymentModel.getPayer_id());
+        repo.save(payment);
+        return converter.convertPaymentToPaymentModelCreate(payment);
+    }
+
+    @Override
     public PaymentModel update(PaymentModelUpd paymentModel) {
         Optional<Payment> oldPayment = repo.findById(paymentModel.getId());
         Payment newPayment = converter.convertPaymentModelToPaymentUpd(paymentModel);

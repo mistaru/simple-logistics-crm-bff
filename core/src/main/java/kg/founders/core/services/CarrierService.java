@@ -17,4 +17,5 @@ public interface CarrierService {
 
     void softDelete(Long id);
 
+    List<Long> getCarrierIds();
 }

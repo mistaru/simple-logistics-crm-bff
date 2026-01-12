@@ -6,6 +6,7 @@ import kg.founders.core.model.CarrierProfileModel;
 import kg.founders.core.services.CarrierService;
 import kg.founders.core.settings.security.permission.annotation.HasPermission;
 import kg.founders.core.settings.security.permission.annotation.HasPermissions;
+import kg.founders.core.settings.security.permission.annotation.ManualPermissionControl;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -67,4 +68,9 @@ public class CarrierControllerRest {
         carrierService.softDelete(id);
     }
 
+    @GetMapping("/ids")
+    @ManualPermissionControl
+    public List<Long> getCarrierIds() {
+        return carrierService.getCarrierIds();
+    }
 }

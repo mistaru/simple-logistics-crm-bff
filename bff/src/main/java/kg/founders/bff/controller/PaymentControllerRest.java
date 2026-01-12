@@ -51,14 +51,14 @@ public class PaymentControllerRest {
     public PaymentModel createCargo(@RequestBody PaymentModel paymentModel) {
         paymentModel.setManagerId(permissionHelper.currentUserId());
         paymentModel.setStatus(PaymentStatus.CLIENT_PAYS_FOR_CARGO);
-        return paymentService.save(paymentModel);
+        return paymentService.create(paymentModel);
     }
 
     @PostMapping("/truck")
     public PaymentModel createTruck(@RequestBody PaymentModel paymentModel) {
         paymentModel.setManagerId(permissionHelper.currentUserId());
         paymentModel.setStatus(PaymentStatus.COMPANY_PAYS_CARRIERS);
-        return paymentService.save(paymentModel);
+        return paymentService.create(paymentModel);
     }
 
     @PutMapping

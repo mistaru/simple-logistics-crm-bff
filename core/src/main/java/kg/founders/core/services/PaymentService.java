@@ -15,6 +15,7 @@ public interface PaymentService {
     PaymentModel getById(Long id);
 
     PaymentModel save(PaymentModel paymentModel);
+    PaymentModel create(PaymentModel paymentModel);
 
     PaymentModel update(PaymentModelUpd paymentModel);
 

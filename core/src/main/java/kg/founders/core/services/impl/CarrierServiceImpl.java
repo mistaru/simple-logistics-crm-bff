@@ -183,4 +183,8 @@ public class CarrierServiceImpl implements CarrierService {
         return value == null ? BigDecimal.ZERO : value;
     }
 
+    @Override
+    public List<Long> getCarrierIds() {
+        return carrierRepository.findIdByRdtIsNull();
+    }
 }
