@@ -112,7 +112,7 @@ public class ClientProfileServiceImpl implements ClientProfileService {
         Map<Long, BigDecimal> paidByCargoId = new HashMap<>();
 
         for (PaymentModel p : payments) {
-            Long cargoId = p.getCargo().getId();
+            Long cargoId = p.getPayer_id();
             if (cargoId == null) continue;
 
             BigDecimal amount = safe(p.getAmount());
