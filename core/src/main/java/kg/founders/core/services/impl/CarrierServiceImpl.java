@@ -154,7 +154,7 @@ public class CarrierServiceImpl implements CarrierService {
             return Collections.emptyMap();
         }
 
-        List<PaymentModel> payments = paymentService.findAllByCargoIdsAndPaymentStatus(
+        List<PaymentModel> payments = paymentService.findAllByPayerIdsAndPaymentStatus(
                 cargoIds,
                 PaymentStatus.COMPANY_PAYS_CARRIERS
         );

@@ -27,7 +27,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         paymentModel.setActual(payment.getActual());
         paymentModel.setComment(payment.getComment());
         paymentModel.setManagerId(payment.getManagerId());
-        paymentModel.setPayer_id(payment.getPayer_id());
+        paymentModel.setPayer_id(payment.getPayerId());
         paymentModel.setAmount(payment.getAmount());
         paymentModel.setType(payment.getStatus().name());
         paymentModel.setCargo(cargoConverter.convertToModel(payment.getCargo()));
@@ -42,7 +42,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         paymentModel.setActual(payment.getActual());
         paymentModel.setComment(payment.getComment());
         paymentModel.setManagerId(payment.getManagerId());
-        paymentModel.setPayer_id(payment.getPayer_id());
+        paymentModel.setPayer_id(payment.getPayerId());
         paymentModel.setAmount(payment.getAmount());
         paymentModel.setType(payment.getStatus().name());
         return paymentModel;
@@ -53,7 +53,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         payment.setId(paymentModel.getId());
         payment.setStatus(paymentModel.getStatus());
         payment.setActual(paymentModel.getActual());
-        payment.setPayer_id(paymentModel.getPayer_id());
+        payment.setPayerId(paymentModel.getPayer_id());
         payment.setComment(paymentModel.getComment());
         payment.setManagerId(paymentModel.getManagerId());
         payment.setAmount(paymentModel.getAmount());
@@ -65,7 +65,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         Payment payment = new Payment();
         payment.setId(paymentModel.getId());
         payment.setActual(paymentModel.getActual());
-        payment.setPayer_id(paymentModel.getPayer_id());
+        payment.setPayerId(paymentModel.getPayer_id());
         payment.setComment(paymentModel.getComment());
         payment.setManagerId(paymentModel.getManagerId());
         payment.setAmount(paymentModel.getAmount());
@@ -76,7 +76,7 @@ public class PaymentConverter extends ModelConverter<PaymentModel, Payment> {
         Payment payment = new Payment();
         payment.setStatus(paymentModel.getStatus());
         payment.setId(paymentModel.getId());
-        payment.setPayer_id(paymentModel.getPayer_id());
+        payment.setPayerId(paymentModel.getPayer_id());
         payment.setActual(paymentModel.getActual());
         payment.setComment(paymentModel.getComment());
         payment.setManagerId(paymentModel.getManagerId());

@@ -100,7 +100,7 @@ public class ClientProfileServiceImpl implements ClientProfileService {
             return Collections.emptyMap();
         }
 
-        List<PaymentModel> payments = paymentService.findAllByCargoIdsAndPaymentStatus(
+        List<PaymentModel> payments = paymentService.findAllByPayerIdsAndPaymentStatus(
                 cargoIds,
                 PaymentStatus.CLIENT_PAYS_FOR_CARGO
         );

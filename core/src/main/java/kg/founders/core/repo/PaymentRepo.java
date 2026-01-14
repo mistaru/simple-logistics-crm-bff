@@ -11,5 +11,6 @@ import java.util.List;
 public interface PaymentRepo extends JpaRepository<Payment, Long> {
     List<Payment> findAllByCargoId(Long cargoId);
     List<Payment> findAllByManagerId(Long managerId);
+    List<Payment> findAllByPayerIdInAndStatusAndRdtIsNull(List<Long> payerIds, PaymentStatus status);
     List<Payment> findAllByCargoIdInAndStatusAndRdtIsNull(List<Long> cargoIds, PaymentStatus status);
 }

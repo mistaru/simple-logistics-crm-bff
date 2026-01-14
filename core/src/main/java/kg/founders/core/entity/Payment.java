@@ -39,7 +39,8 @@ public class Payment extends BaseEntity {
 
     Long managerId;
 
-    Long payer_id;
+    @Column(name = "payer_id")
+    Long payerId;
 
     BigDecimal amount;
 }

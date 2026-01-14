@@ -48,8 +48,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<PaymentModel> findAllByCargoIdsAndPaymentStatus(List<Long> cargoIds, PaymentStatus paymentStatus) {
-        return repo.findAllByCargoIdInAndStatusAndRdtIsNull(cargoIds, paymentStatus)
+    public List<PaymentModel> findAllByPayerIdsAndPaymentStatus(List<Long> payerIds, PaymentStatus paymentStatus) {
+        return repo.findAllByPayerIdInAndStatusAndRdtIsNull(payerIds, paymentStatus)
                 .stream().map(converter::convertPaymentToPaymentModel)
                 .collect(Collectors.toList());
     }
@@ -62,7 +62,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentModel save(PaymentModel paymentModel) {
         Payment payment = converter.convertPaymentModelToPayment(paymentModel);
-        payment.setPayer_id(paymentModel.getPayer_id());
+        payment.setPayerId(paymentModel.getPayer_id());
         repo.save(payment);
         return converter.convertPaymentToPaymentModel(payment);
     }
@@ -70,7 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentModel create(PaymentModel paymentModel) {
         Payment payment = converter.convertPaymentModelToPaymentCreate(paymentModel);
-        payment.setPayer_id(paymentModel.getPayer_id());
+        payment.setPayerId(paymentModel.getPayer_id());
         repo.save(payment);
         return converter.convertPaymentToPaymentModelCreate(payment);
     }
@@ -82,7 +82,7 @@ public class PaymentServiceImpl implements PaymentService {
         newPayment.setId(oldPayment.get().getId());
         newPayment.setStatus(PaymentStatus.fromValue(paymentModel.getStatus()));
         newPayment.setMdt(new Timestamp(System.currentTimeMillis()));
-        newPayment.setPayer_id(paymentModel.getPayer_id());
+        newPayment.setPayerId(paymentModel.getPayer_id());
         repo.save(newPayment);
 
         return converter.convertPaymentToPaymentModel(newPayment);
