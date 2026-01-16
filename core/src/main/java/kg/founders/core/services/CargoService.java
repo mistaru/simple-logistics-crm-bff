@@ -1,5 +1,6 @@
 package kg.founders.core.services;
 
+import kg.founders.core.enums.CargoStatus;
 import kg.founders.core.model.CargoModel;
 import kg.founders.core.model.ReassignCargosRequest;
 
@@ -29,4 +30,6 @@ public interface CargoService {
     List<Long> getCargoIds();
 
     CargoModel setPrice(BigDecimal price, Long cargoId);
+
+    void updateStatusForCargos(List<Long> ids, CargoStatus status);
 }

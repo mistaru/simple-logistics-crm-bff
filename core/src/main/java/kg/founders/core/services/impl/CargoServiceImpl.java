@@ -174,4 +174,12 @@ public class CargoServiceImpl implements CargoService {
         // 5. Маппинг в модель
         return cargoConverter.convertFromEntity(saved);    }
 
+    @Override
+    @Transactional
+    public void updateStatusForCargos(List<Long> ids, CargoStatus status) {
+        if (ids != null && !ids.isEmpty() && status != null) {
+            repo.updateStatusForCargos(ids, status);
+        }
+    }
+
 }

@@ -55,6 +55,13 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public List<PaymentModel> findAllByPayerIdAndPaymentStatus(Long payerId, PaymentStatus paymentStatus) {
+        return repo.findAllByPayerIdAndStatusAndRdtIsNull(payerId, paymentStatus)
+                .stream().map(converter::convertPaymentToPaymentModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public PaymentModel getById(Long id) {
         return converter.convertPaymentToPaymentModel(repo.findById((long) id).orElse(null));
     }

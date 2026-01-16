@@ -27,5 +27,8 @@ public interface PaymentService {
 
     void reassign(Long managerId, Long paymentId);
 
-    List<PaymentModel> findAllByPayerIdsAndPaymentStatus(List<Long> cargoIds, PaymentStatus paymentStatus);
+    List<PaymentModel> findAllByPayerIdsAndPaymentStatus(List<Long> payerIds, PaymentStatus paymentStatus);
+
+    List<PaymentModel> findAllByPayerIdAndPaymentStatus(Long payerId, PaymentStatus paymentStatus);
+
 }

@@ -13,4 +13,5 @@ public interface PaymentRepo extends JpaRepository<Payment, Long> {
     List<Payment> findAllByManagerId(Long managerId);
     List<Payment> findAllByPayerIdInAndStatusAndRdtIsNull(List<Long> payerIds, PaymentStatus status);
     List<Payment> findAllByCargoIdInAndStatusAndRdtIsNull(List<Long> cargoIds, PaymentStatus status);
+    List<Payment> findAllByPayerIdAndStatusAndRdtIsNull(Long payerId, PaymentStatus status);
 }

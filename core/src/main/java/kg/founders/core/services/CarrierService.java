@@ -3,6 +3,7 @@ package kg.founders.core.services;
 import kg.founders.core.model.CarrierModel;
 import kg.founders.core.model.CarrierProfileModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CarrierService {
@@ -18,4 +19,6 @@ public interface CarrierService {
     void softDelete(Long id);
 
     List<Long> getCarrierIds();
+
+    void updateCarrierBalance(Long id, BigDecimal amount);
 }

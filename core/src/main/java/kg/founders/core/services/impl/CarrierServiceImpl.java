@@ -85,7 +85,7 @@ public class CarrierServiceImpl implements CarrierService {
 
         // 2) Один запрос на все платежи по грузам клиента
         //    и агрегация суммы платежей по cargoId
-        Map<Long, BigDecimal> paidByCargoId = aggregatePaidByCargoId(cargoIds);
+        BigDecimal paidByPayerId = aggregatePaidByPayerId(id);
 
         // 3) Формируем информацию по платежам перевозчика
         BigDecimal carrierInvoiceTotal = BigDecimal.ZERO;
@@ -94,15 +94,16 @@ public class CarrierServiceImpl implements CarrierService {
 
         for (CargoModel cargo : cargos) {
             BigDecimal invoiceTotal = safe(cargo.getPrice()); // цена груза
-            BigDecimal paymentReceived = safe(paidByCargoId.get(cargo.getId())); // сколько оплатили по этому грузу
-            BigDecimal balanceDue = invoiceTotal.subtract(paymentReceived); // сколько осталось
+            //BigDecimal paymentReceived = safe(paidByPayerId.get(cargo.getId())); // сколько оплатили по этому грузу
+            //BigDecimal balanceDue = invoiceTotal.subtract(paymentReceived); // сколько осталось
 
             //cargoProfiles.add(toCargoProfile(cargo, invoiceTotal, paymentReceived, balanceDue));
 
             // ИТОГО по перевозчику
             carrierInvoiceTotal = carrierInvoiceTotal.add(invoiceTotal);
-            carrierPaymentReceived = carrierPaymentReceived.add(paymentReceived);
         }
+
+        carrierPaymentReceived = paidByPayerId;
 
         carrierBalanceDue = carrierInvoiceTotal.subtract(carrierPaymentReceived);
 
@@ -149,31 +150,33 @@ public class CarrierServiceImpl implements CarrierService {
     /**
      * Агрегирует платежи (сумму amount) по cargoId.
      */
-    private Map<Long, BigDecimal> aggregatePaidByCargoId(List<Long> cargoIds) {
-        if (cargoIds == null || cargoIds.isEmpty()) {
-            return Collections.emptyMap();
+    private BigDecimal aggregatePaidByPayerId(Long payerId) {
+        if (payerId == null) {
+            return BigDecimal.ZERO;
         }
 
-        List<PaymentModel> payments = paymentService.findAllByPayerIdsAndPaymentStatus(
-                cargoIds,
+        List<PaymentModel> payments = paymentService.findAllByPayerIdAndPaymentStatus(
+                payerId,
                 PaymentStatus.COMPANY_PAYS_CARRIERS
         );
 
         if (payments == null || payments.isEmpty()) {
-            return Collections.emptyMap();
+            return BigDecimal.ZERO;
         }
 
-        Map<Long, BigDecimal> paidByCargoId = new HashMap<>();
+//        Map<Long, BigDecimal> paidByPayerId = new HashMap<>();
+        BigDecimal paidByPayerId = BigDecimal.ZERO;
 
         for (PaymentModel p : payments) {
-            Long cargoId = p.getCargo().getId();
-            if (cargoId == null) continue;
+            Long cargosPayerId = p.getPayer_id();
+            if (cargosPayerId == null) continue;
 
             BigDecimal amount = safe(p.getAmount());
-            paidByCargoId.merge(cargoId, amount, BigDecimal::add);
+            //paidByPayerId.merge(payerId, amount, BigDecimal::add);
+            paidByPayerId = paidByPayerId.add(amount);
         }
 
-        return paidByCargoId;
+        return paidByPayerId;
     }
 
     /**
@@ -187,4 +190,10 @@ public class CarrierServiceImpl implements CarrierService {
     public List<Long> getCarrierIds() {
         return carrierRepository.findIdByRdtIsNull();
     }
+
+    @Override
+    public void updateCarrierBalance(Long id, BigDecimal amount) {
+        carrierRepository.updateCarrierBalance(id, amount);
+    }
+
 }

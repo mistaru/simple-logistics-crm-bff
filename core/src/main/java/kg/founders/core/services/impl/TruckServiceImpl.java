@@ -1,16 +1,22 @@
 package kg.founders.core.services.impl;
 
 import kg.founders.core.converter.TruckConverter;
+import kg.founders.core.entity.Carrier;
 import kg.founders.core.entity.Truck;
+import kg.founders.core.model.CargoModel;
+import kg.founders.core.model.CargoTruckModel;
 import kg.founders.core.model.TruckModel;
 import kg.founders.core.repo.TruckRepository;
+import kg.founders.core.services.CargoService;
 import kg.founders.core.services.CargoTruckService;
+import kg.founders.core.services.CarrierService;
 import kg.founders.core.services.TruckService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +32,8 @@ public class TruckServiceImpl implements TruckService {
     TruckRepository truckRepository;
     TruckConverter truckConverter;
     CargoTruckService cargoTruckService;
+    CarrierService carrierService;
+    private final CargoService cargoService;
 
     @Override
     @Transactional(readOnly = true)
@@ -44,7 +52,12 @@ public class TruckServiceImpl implements TruckService {
     @Transactional
     public TruckModel save(TruckModel truckModel) {
         Truck truck = truckConverter.convertTruckModelToTruck(truckModel);
+
         truckRepository.save(truck);
+
+        Long carrierId = truckModel.getCarrier().getId();
+        carrierService.updateCarrierBalance(carrierId, truckRepository.calculateServiceFeeForCarrier(carrierId)); // обновляем баланс перевозчика
+
         return truckConverter.convertTruckToTruckModel(truck);
     }
 
@@ -57,8 +70,20 @@ public class TruckServiceImpl implements TruckService {
         truckConverter.updateTruckFromModel(truckModel, existingTruck);
 
         Truck savedTruck = truckRepository.save(existingTruck);
-        return truckConverter.convertTruckToTruckModel(savedTruck);
 
+        Long carrierId = truckModel.getCarrier().getId();
+        carrierService.updateCarrierBalance(carrierId, truckRepository.calculateServiceFeeForCarrier(carrierId)); // обновляем баланс перевозчика
+
+        CargoTruckModel cargoTruckModel = cargoTruckService.getCargoTruckByTruckId(existingTruck.getId()); // находим cargo
+        List<Long> cargoIds = new ArrayList<>();
+        if (cargoTruckModel != null)
+            cargoIds = cargoTruckModel.getCargos().stream()
+                    .map(CargoModel::getId)
+                    .collect(Collectors.toList());
+
+        cargoService.updateStatusForCargos(cargoIds, savedTruck.getStatus());
+
+        return truckConverter.convertTruckToTruckModel(savedTruck);
     }
 
     @Override
@@ -75,6 +100,9 @@ public class TruckServiceImpl implements TruckService {
                 );
             truckToDelete.markDeleted();
             truckRepository.save(truck.get());
+
+            Long carrierId = truckToDelete.getCarrier().getId();
+            carrierService.updateCarrierBalance(carrierId, truckRepository.calculateServiceFeeForCarrier(carrierId)); // обновляем баланс перевозчика
         }
     }
 
